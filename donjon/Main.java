@@ -48,8 +48,6 @@ public class Main {
              * Lance le jeu avec le perso du joueur
              */
             Game game = new Game(menu.getPlayer(), random);
-            System.out.println(game.getPlayer());
-
 
             try {
                 game.gameLoop();

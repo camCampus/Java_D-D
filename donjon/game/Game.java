@@ -71,7 +71,6 @@ public class Game {
             System.out.println("Your player advance of " + dice + " case(s)");
         }
 
-
         if (this.position == map) {
             asciiArt.congratulation();
             waitSecond(longWait);

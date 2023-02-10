@@ -59,8 +59,6 @@ public class Menu {
      * Fonction qui lance le premier menu du choix du personnage
      */
     public boolean init() {
-
-
         int navChoice = this.welcome();
         scanner.nextLine();
 
@@ -91,13 +89,51 @@ public class Menu {
         return this.scanner.nextInt();
     }
 
+    /***
+     * Menu 2 le joueur choisit le nom de son personnage
+     * @return le nom du joueur
+     */
+    public String playerSetName() {
+        System.out.println("Enter your player name");
+        return this.scanner.nextLine();
+    }
+
+    /**
+     * Menu 3 le joueur chosit son type de personnage
+     *
+     * @return le type du personnage
+     */
+    public int playerSetType() {
+        System.out.println("Select your type");
+        System.out.println("1 ---| Warrior |---");
+        asciiArt.drawWarior();
+        waitSecond(shortWait);
+        System.out.println("2 ---| Wizard |---");
+        this.asciiArt.drawWizzard();
+        return this.scanner.nextInt();
+    }
+
+    /**
+     * Fonction pour créer un player et choisir le nom et le type
+     */
+    public void createPlayer() {
+        String persoName = this.playerSetName();
+        int persoType = this.playerSetType();
+        scanner.nextLine();
+        if (persoType != 1) {
+            this.player = new Wizard(persoName, TypePersonage.Wizard);
+        } else {
+            this.player.setName(persoName);
+        }
+        this.player.toString();
+    }
+
     /**
      * Fonction pour permettre au joueur de modifier son personnage, de lancer
      * le jeu ou de quitter le jeu.
      * @return Un boolean pour savoir si le joueur souhaite quitter le jeu.
      */
     public boolean playerModification() {
-
         System.out.println("Are you ready ?");
         System.out.println("1 ---| Lunch The Game |---");
         System.out.println("2 ---| Reset Personage |---");
@@ -137,46 +173,6 @@ public class Menu {
         }
         return this.quit;
     }
-
-    /***
-     * Menu 2 le joueur choisit le nom de son personnage
-     * @return le nom du joueur
-     */
-    public String playerSetName() {
-        System.out.println("Enter your player name");
-        return this.scanner.nextLine();
-    }
-
-    /**
-     * Menu 3 le joueur chosit son type de personnage
-     *
-     * @return le type du personnage
-     */
-    public int playerSetType() {
-        System.out.println("Select your type");
-        System.out.println("1 ---| Warrior |---");
-        asciiArt.drawWarior();
-        System.out.println("2 ---| Wizard |---");
-        this.asciiArt.drawWizzard();
-        return this.scanner.nextInt();
-    }
-
-    /**
-     * Fonction pour créer un player et choisir le nom et le type
-     */
-    public void createPlayer() {
-        String persoName = this.playerSetName();
-        int persoType = this.playerSetType();
-        scanner.nextLine();
-        if (persoType != 1) {
-            this.player = new Wizard(persoName, TypePersonage.Wizard);
-        } else {
-            this.player.setName(persoName);
-        }
-
-        System.out.println(player);
-    }
-
     /**
      * Fonction qui se lance quand le joueur fini le jeu pour lui permettre de
      * recommencer le jeu ou quitter.
