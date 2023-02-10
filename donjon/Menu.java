@@ -12,16 +12,33 @@ public class Menu {
      * Attribut scanner de type Scanner qui sera initialisé à la construction
      */
     private final Scanner scanner;
-    private final AsciiArt asciiArt;
+    /**
+     * Represente la classe AsciiArt qui stock toutes les methodes pour afficher nos
+     * asset ascii
+     */
+    private  AsciiArt asciiArt;
     /**
      * Attribut pour stocker le personnage que le joueur aura configuré, par default
      * le nom est "default" et la classe est Warrior.
      */
     private Personnage player;
 
+    /**
+     * Parametre pour la fonction waitSecond() represente une valeur en milliseconde
+     * ici 1500
+     */
     private int shortWait;
+
+    /**
+     * Parametre pour la fonction waitSecond() represente une valeur en milliseconde
+     * ici 3000
+     */
     private int longWait;
 
+    /**
+     * Initialisé à false attribut pour déteminer si le joueur souhaite quitter le
+     * jeu.
+     */
     private boolean quit;
 
     public Menu(Scanner scanner) {
@@ -69,6 +86,11 @@ public class Menu {
         return this.scanner.nextInt();
     }
 
+    /**
+     * Fonction pour permettre au joueur de modifier son personnage, de lancer
+     * le jeu ou de quitter le jeu.
+     * @return Un boolean pour savoir si le joueur souhaite quitter le jeu.
+     */
     public boolean playerModification() {
 
         System.out.println("Are you ready ?");
@@ -145,6 +167,11 @@ public class Menu {
         System.out.println(player);
     }
 
+    /**
+     * Fonction qui se lance quand le joueur fini le jeu pour lui permettre de
+     * recommencer le jeu ou quitter.
+     * @return
+     */
     public boolean restartGame() {
 
         System.out.println("You finish the dungeon of Morgot");

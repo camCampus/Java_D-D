@@ -9,6 +9,10 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
+
+        /**
+         * Variable d'environement utiliser par les méthodes du jeu.
+         */
         boolean quitGame = false;
         boolean run = true;
         Scanner scanner = new Scanner(System.in);

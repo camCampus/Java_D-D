@@ -2,6 +2,12 @@ package donjon;
 
 public class Utils {
 
+    /**
+     * Fonction pour attendre avant d'afficher un message
+     * pour rendre l'utilisation meilleur
+     *
+     * @param number temp en milliseconde
+     */
     public static void waitSecond(int number) {
         try {
             Thread.sleep(number);
