@@ -1,5 +1,9 @@
 package donjon;
 
+import donjon.asset.AsciiArt;
+import donjon.exception.PersoOutOfMapException;
+import donjon.game.Game;
+import donjon.game.Menu;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -45,7 +49,16 @@ public class Main {
              */
             Game game = new Game(menu.getPlayer(), random);
             System.out.println(game.getPlayer());
-            game.gameLoop();
+
+
+            try {
+                game.gameLoop();
+            } catch (PersoOutOfMapException e) {
+                System.out.println(e.getMessage());
+                new AsciiArt().outOfMap();
+                System.out.println("Dragon kill you");
+            }
+
             quitGame = menu.restartGame();
             if (quitGame) {
                 run = false;
