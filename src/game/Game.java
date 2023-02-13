@@ -2,9 +2,14 @@ package src.game;
 
 import src.asset.AsciiArt;
 import src.exception.PersoOutOfMapException;
+import src.menu.Menu;
 import src.perso.Personnage;
+import src.window.DisplayGameAnimation;
+import src.window.GameWindow;
+import src.window.Panel;
 
 import java.util.Random;
+import java.util.Scanner;
 
 import static src.utils.Utils.waitSecond;
 
@@ -33,11 +38,15 @@ public class Game {
      */
     private int position;
 
+    private Scanner scanner;
     private AsciiArt asciiArt;
     private int shortWait;
     private int longWait;
 
-    public Game(Personnage player, Random random) {
+    private boolean moving;
+
+
+    public Game(Personnage player, Random random, Scanner scanner) {
         this.map = 64;
         this.dice = 6;
         this.player = player;
@@ -46,6 +55,8 @@ public class Game {
         this.asciiArt = new AsciiArt();
         this.shortWait = 1500;
         this.longWait = 3000;
+        this.moving = true;
+        this.scanner = scanner;
     }
 
     /**
@@ -62,14 +73,37 @@ public class Game {
     }
 
     public void gameLoop() throws PersoOutOfMapException {
+        Panel panel = new Panel();
+        DisplayGameAnimation displayGameAnimation = new DisplayGameAnimation(panel);
+        Menu menu = new Menu(scanner);
 
         while (this.position < this.map) {
-            System.out.println("Your position: "+this.position);
-            int dice = this.rollDice();
-            this.playerMouve(dice);
-            //waitSecond(1000);
+            int playerAction = menu.nextTurnChoice();
+
+            if (playerAction == 1) {
+                System.out.println("Your position: " + this.position);
+                /**
+                 * Lance le dés
+                 */
+                this.dice = this.rollDice();
+
+                //Passe la valeur du dés au pannel pour povoir faire scroller la fenetre de jeu
+                panel.setDice(this.dice);
+
+                // Passe moving a true pour jouer l'animation RUN et faire avancer la frame du joueur en fonction du jet de dés
+                this.moving = true;
+                panel.setMoving(moving);
+
+                //Passe moving a false pour jouer l'animation IDLE quand la frame du joueur reste sur place
+                this.moving = false;
+                this.playerMouve(dice);
+            }
+
+            waitSecond(1000);
             System.out.println("Your player advance of " + dice + " case(s)");
         }
+
+
 
         if (this.position == map) {
             asciiArt.congratulation();

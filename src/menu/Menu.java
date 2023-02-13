@@ -1,4 +1,4 @@
-package src.game;
+package src.menu;
 
 import src.asset.AsciiArt;
 import src.perso.Personnage;
@@ -50,8 +50,8 @@ public class Menu {
         this.scanner = scanner;
         this.player = new Warrior("default", TypePersonage.Warrior);
         this.asciiArt = new AsciiArt();
-        this.shortWait = 1500;
-        this.longWait = 3000;
+        this.shortWait = 15;
+        this.longWait = 30;
         this.quit = false;
     }
 
@@ -200,6 +200,13 @@ public class Menu {
         return this.quit;
     }
 
+    public int nextTurnChoice() {
+        System.out.println("Your action");
+        System.out.println("1 ---| Roll Dice |---");
+        int val = this.scanner.nextInt();
+        this.scanner.nextLine();
+        return val;
+    }
     /**
      * @return Le personnage du joueur avec ses configurations
      */

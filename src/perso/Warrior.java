@@ -13,6 +13,7 @@ public class Warrior extends Personnage {
         this.typeDefense = "no item";
         this.weaponAttack = "no item";
         this.protectionDefense = "no item";
+
     }
 
     /**

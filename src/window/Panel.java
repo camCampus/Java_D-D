@@ -10,47 +10,39 @@ import java.util.Objects;
 
 public class Panel extends JPanel {
 
-    private float xDelta = 100, yDelta = 100;
-    private BufferedImage image;
-    private BufferedImage[] afkAnimation;
+    private float xDelta = 0, yDelta = 65;
+
     private int aniTick, aniIndex, aniSpeed = 15;
+    private Animation animation;
+    private boolean moving;
+    private int map = 64;
+    private int dice = 0;
+    private int count = 0;
 
     public Panel() {
-        importImg();
-        loadAnimation();
+        this.animation = new Animation();
+        this.animation.importImg();
 
-        setPanelSize();
+        animation.runAnim();
+        animation.idleAnim();
+
+        this.setPanelSize();
         addKeyListener(new KeyboardInput(this));
     }
 
-    private void loadAnimation() {
-        afkAnimation = new BufferedImage[3];
 
-        for (int i = 0; i < afkAnimation.length; i++) {
-            afkAnimation[i] = image.getSubimage(i * 128, 228, 16, 28);
-        }
-    }
-
-    private void importImg() {
-        InputStream is = getClass().getResourceAsStream("/player_sprites.png");
-        try {
-            image = ImageIO.read(Objects.requireNonNull(is));
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                is.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
+    /**
+     * Definit la taille de la fenetre d'affichage
+     */
     private void setPanelSize() {
-        Dimension size = new Dimension(600, 600);
+        Dimension size = new Dimension(this.map*64, 5*64);
         setPreferredSize(size);
     }
 
+    /**
+     * Change la position de la frame du joueur sur l'axe X
+     * @param value
+     */
     public void changeXDelta(int value) {
         this.xDelta += value;
     }
@@ -65,22 +57,89 @@ public class Panel extends JPanel {
         this.yDelta = y;
     }
 
-    private void updateAnimationTick() {
-        aniTick++;
-        if (aniTick >= aniSpeed) {
-            aniTick = 0;
-            aniIndex++;
-            if (aniIndex >= afkAnimation.length) {
-                aniIndex = 0;
+    //Actualise les sprites pour jouer une animation (RUN ou IDLE)
+    private void updateAnimationTick(BufferedImage[] anim) {
+
+        this.aniTick++;
+        if (this.aniTick >= this.aniSpeed) {
+            this.aniTick = 0;
+            this.aniIndex++;
+            if (this.aniIndex >= anim.length) {
+                this.aniIndex = 0;
             }
         }
     }
 
-    public void paintComponent(Graphics draw) {
-        super.paintComponent(draw);
+    /**
+     * Definit si l'animation doit être RUN ou IDLE
+     * @param moving
+     */
+	public void setMoving(boolean moving) {
+		this.moving = moving;
+	}
 
-        updateAnimationTick();
-        draw.drawImage(afkAnimation[aniIndex], (int) xDelta, (int) yDelta, 64, 128, null);
+    /**
+     * Selectionne l'annimation en fonction de moving true ou false
+     * @param moving
+     * @return
+     */
+    private BufferedImage[] selectAnimation(Boolean moving) {
+        BufferedImage[] select;
+        if (moving) {
+            select = animation.getRunAnim();
+        } else {
+            select = animation.getIdleAnim();
+        }
+        return select;
     }
 
+    private void updatePose() {
+        if (moving) {
+            for (int i=0; i<this.dice; i++) {
+                xDelta += 5;
+                System.out.println("Moving");
+            }
+        }
+    }
+    public void paintComponent(Graphics draw) {
+        super.paintComponent(draw);
+        BufferedImage[] select = selectAnimation(this.moving);
+        updateAnimationTick(select);
+        updatePose();
+        if (this.count > this.dice) {
+            this.moving = false;
+            this.count =0;
+        }
+        this.count++ ;
+        draw.drawImage(animation.getfloorDraw(), 0, 80 , 64, 64, null);
+        draw.drawImage(animation.getfloorDraw(), 0, 144 , 64, 64, null);
+        draw.drawImage(animation.getfloorDraw(), 0, 208, 64, 64, null);
+        draw.drawImage(animation.getWallDraw(), 0, 16, 64, 64, null);
+        draw.drawImage(animation.getTopWallDraw(), 0, -48, 64, 64, null);
+        draw.drawImage(animation.getWallDraw(), 0, 256, 64, 64, null);
+        draw.drawImage(animation.getTopWallDraw(), 0, -48 +240, 64, 64, null);
+
+        for (int i= 1; i < this.map; i++) {
+            draw.drawImage(animation.getfloorDraw(), 64 *i, 80, 64, 64, null);
+            draw.drawImage(animation.getfloorDraw(), 64*i, 144, 64, 64, null);
+            draw.drawImage(animation.getfloorDraw(), 64*i, 208, 64, 64, null);
+            draw.drawImage(animation.getWallDraw(), 64 *i, 16, 64, 64, null);
+            draw.drawImage(animation.getTopWallDraw(), 64 *i, -48, 64, 64, null);
+            draw.drawImage(animation.getTopWallDraw(), 64 *i, -48+240, 64, 64, null);
+            draw.drawImage(animation.getWallDraw(), 64 *i, 256, 64, 64, null);
+
+        }
+
+
+        draw.drawImage(select[aniIndex], (int) xDelta, (int) yDelta, 64, 128, null);
+
+    }
+
+    public void setDice(int dice) {
+        this.dice = dice;
+    }
+
+    public int getDice() {
+        return dice;
+    }
 }
