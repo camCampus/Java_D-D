@@ -65,4 +65,5 @@ public class Animation {
     public BufferedImage getTopWallDraw() {
         return  image.getSubimage(16, 0,16,16);
     }
+    public BufferedImage getRedBanner() {return image.getSubimage(16,32,16,16);}
 }

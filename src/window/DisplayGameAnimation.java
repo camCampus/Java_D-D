@@ -6,14 +6,15 @@ public class DisplayGameAnimation implements Runnable {
     private GameWindow gameWindow;
     private final int FPS_SET = 120;
     private final int UPS_SET = 200;
+    private int scrollPos;
 
 
     public DisplayGameAnimation(Panel panel) {
+        this.scrollPos = 0;
         this.panel = panel;
         this.gameWindow = new GameWindow(panel);
         panel.requestFocus();
         startGameLoop();
-
     }
 
     private void startGameLoop() {
@@ -25,7 +26,10 @@ public class DisplayGameAnimation implements Runnable {
     public void run() {
 
             while (gameThread != null) {
-                this.gameWindow.goTo(panel.getDice()*32, 0);
+                if (panel.getMoving()) {
+                    this.gameWindow.goTo((int)panel.getxDelta(), 0);
+                }
+
                 long now = System.currentTimeMillis();
                 panel.repaint();
                 long afterDraw = System.currentTimeMillis();

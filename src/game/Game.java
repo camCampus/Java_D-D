@@ -87,15 +87,16 @@ public class Game {
                  */
                 this.dice = this.rollDice();
 
-                //Passe la valeur du dés au pannel pour povoir faire scroller la fenetre de jeu
+                //Passe la valeur du dés au pannel pour pouvoir faire scroller la fenetre de jeu
                 panel.setDice(this.dice);
 
                 // Passe moving a true pour jouer l'animation RUN et faire avancer la frame du joueur en fonction du jet de dés
                 this.moving = true;
-                panel.setMoving(moving);
+                panel.setMoving(this.moving);
 
                 //Passe moving a false pour jouer l'animation IDLE quand la frame du joueur reste sur place
                 this.moving = false;
+
                 this.playerMouve(dice);
             }
 
@@ -125,5 +126,7 @@ public class Game {
         return player;
     }
 
-
+    public void setPlayer(Personnage player) {
+        this.player = player;
+    }
 }

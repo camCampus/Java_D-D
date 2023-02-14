@@ -186,14 +186,11 @@ public class Menu {
         waitSecond(shortWait);
         System.out.println("1 ---| New Game |---");
         waitSecond(shortWait);
-//        System.out.println("2 ---| New Game + (increase the difficulty) |---");
-//        waitSecond(shortWait);
+
         System.out.println("3 ---| Exit Game |---");
         int navChoice = scanner.nextInt();
         if (navChoice == 1){
             System.out.println("New Game");
-//        } else if (navChoice == 2) {
-//            System.out.println("New Game +");
         } else {
             this.quit = true;
         }
@@ -213,5 +210,6 @@ public class Menu {
     public Personnage getPlayer() {
         return player;
     }
+
 
 }

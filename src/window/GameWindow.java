@@ -24,7 +24,7 @@ public class GameWindow {
         jframe.setVisible(true);
         jframe.setSize(6*64,360);
 
-        this.scrollPanel = new ScrollPane(2);
+        this.scrollPanel = new ScrollPane();
         this.scrollPanel.add(panel);
         jframe.add(this.scrollPanel);
 
