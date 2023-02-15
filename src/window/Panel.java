@@ -16,8 +16,9 @@ public class Panel extends JPanel {
     private Animation animation;
     private boolean moving;
     private int map = 64;
-    private int dice = 0;
-    private int count = 0;
+
+    private GameWindow gameWindow;
+
 
     public Panel() {
         this.animation = new Animation();
@@ -48,15 +49,7 @@ public class Panel extends JPanel {
         this.xDelta += value;
     }
 
-    public void changeYDelta(int value) {
-        this.yDelta += value;
 
-    }
-
-    public void setRectPos(int x, int y) {
-        this.xDelta = x;
-        this.yDelta = y;
-    }
 
     //Actualise les sprites pour jouer une animation (RUN ou IDLE)
     private void updateAnimationTick(BufferedImage[] anim) {
@@ -71,14 +64,6 @@ public class Panel extends JPanel {
         }
     }
 
-    /**
-     * Definit si l'animation doit être RUN ou IDLE
-     *
-     * @param moving
-     */
-    public void setMoving(boolean moving) {
-        this.moving = moving;
-    }
 
     /**
      * Selectionne l'annimation en fonction de moving true ou false
@@ -96,24 +81,13 @@ public class Panel extends JPanel {
         return select;
     }
 
-    private void updatePose() {
-        if (moving) {
-            for (int i = 1; i <= this.dice; i++) {
-                xDelta += 16;
-            }
-        }
-    }
+
 
     public void paintComponent(Graphics draw) {
         super.paintComponent(draw);
         BufferedImage[] select = selectAnimation(this.moving);
         updateAnimationTick(select);
-        updatePose();
-        if (this.count > this.dice) {
-            this.moving = false;
-            this.count = 1;
-        }
-        this.count++;
+        this.gameWindow.goTo((int) xDelta, 0);
         draw.drawImage(animation.getfloorDraw(), 0, 80, 64, 64, null);
         draw.drawImage(animation.getfloorDraw(), 0, 144, 64, 64, null);
         draw.drawImage(animation.getfloorDraw(), 0, 208, 64, 64, null);
@@ -123,7 +97,7 @@ public class Panel extends JPanel {
         draw.drawImage(animation.getTopWallDraw(), 0, -48 + 240, 64, 64, null);
 
 
-        for (int i = 1; i < this.map; i++) {
+        for (int i = 0; i < this.map; i++) {
             draw.drawImage(animation.getfloorDraw(), 64 * i, 80, 64, 64, null);
             draw.drawImage(animation.getfloorDraw(), 64 * i, 144, 64, 64, null);
             draw.drawImage(animation.getfloorDraw(), 64 * i, 208, 64, 64, null);
@@ -139,19 +113,23 @@ public class Panel extends JPanel {
         draw.drawImage(select[aniIndex], (int) xDelta, (int) yDelta, 64, 128, null);
 
     }
-
-    public void setDice(int dice) {
-        this.dice = dice;
-    }
-
     public float getxDelta() {
         return xDelta;
     }
 
-    public int getDice() {
-        return dice;
+    public void setMoving(boolean moving) {
+        this.moving = moving;
     }
-    public boolean getMoving () {
+
+    public void setGameWindow(GameWindow gameWindow) {
+        this.gameWindow = gameWindow;
+    }
+
+    public GameWindow getGameWindow() {
+        return gameWindow;
+    }
+
+    public boolean getMoving() {
         return this.moving;
     }
 }

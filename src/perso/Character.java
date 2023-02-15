@@ -1,7 +1,7 @@
 package src.perso;
 import java.util.Random;
 
-public abstract class Personnage {
+public abstract class Character {
 
     /**
      * Nom du personnage définit par l'utilisateur
@@ -11,7 +11,7 @@ public abstract class Personnage {
     /**
      * le type du personnage Guerrier par default ou Magicien
      */
-    private TypePersonage type;
+    private TypeCharacter type;
 
     /**
      * La vie du personnage
@@ -24,7 +24,7 @@ public abstract class Personnage {
     private int power;
 
     private Random random;
-    Personnage(String name, TypePersonage type) {
+    Character(String name, TypeCharacter type) {
         this.name = name;
         this.type = type;
         this.life = randomLife(type);
@@ -33,7 +33,7 @@ public abstract class Personnage {
 
 
 
-    public int randomLife(TypePersonage type) {
+    public int randomLife(TypeCharacter type) {
         int rand = 0;
         switch (type) {
             case Warrior -> rand = new Random().nextInt(5, 11);
@@ -41,7 +41,7 @@ public abstract class Personnage {
         }
         return rand;
     }
-    public int randomPower(TypePersonage type) {
+    public int randomPower(TypeCharacter type) {
         int rand = 0;
         switch (type) {
             case Warrior -> rand = new Random().nextInt(5, 11);
@@ -53,7 +53,7 @@ public abstract class Personnage {
         return name;
     }
 
-    public TypePersonage getType() {
+    public TypeCharacter getType() {
         return type;
     }
 
@@ -69,7 +69,7 @@ public abstract class Personnage {
         this.name = name;
     }
 
-    public void setType(TypePersonage type) {
+    public void setType(TypeCharacter type) {
         this.type = type;
     }
 

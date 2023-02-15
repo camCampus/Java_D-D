@@ -1,5 +1,7 @@
 package src.items.attack;
 
+import src.factory.FillLevel;
+
 public class Spell extends AttackItem{
 
     private SpellList name;
@@ -21,5 +23,16 @@ public class Spell extends AttackItem{
             case FireBlast -> description = "Ball of fire, hurt and burn the enemy";
         }
         return description;
+    }
+
+    public Spell createSpell(FillLevel level) {
+        Spell spell;
+
+        if (level == FillLevel.Easy ) {
+            spell = new Spell(SpellList.FireBlast, 3);
+        } else {
+            spell = new Spell(SpellList.IceArrow, 7);
+        }
+        return spell;
     }
 }

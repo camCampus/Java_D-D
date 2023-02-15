@@ -1,17 +1,14 @@
 package src.game;
 
 import src.asset.AsciiArt;
+import src.board.Board;
+import src.board.CellEntry;
 import src.exception.PersoOutOfMapException;
-import src.menu.Menu;
-import src.perso.Personnage;
-import src.window.DisplayGameAnimation;
-import src.window.GameWindow;
-import src.window.Panel;
+import src.perso.Character;
 
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
-
-import static src.utils.Utils.waitSecond;
 
 public class Game {
 
@@ -27,7 +24,7 @@ public class Game {
     /**
      * Le personnage du joueur
      */
-    private Personnage player;
+    private Character player;
     /**
      * Attribut qui va stocker le random pour le lancer de dés
      */
@@ -46,7 +43,7 @@ public class Game {
     private boolean moving;
 
 
-    public Game(Personnage player, Random random, Scanner scanner) {
+    public Game(Character player, Random random, Scanner scanner) {
         this.map = 64;
         this.dice = 6;
         this.player = player;
@@ -73,45 +70,39 @@ public class Game {
     }
 
     public void gameLoop() throws PersoOutOfMapException {
-        Panel panel = new Panel();
-        DisplayGameAnimation displayGameAnimation = new DisplayGameAnimation(panel);
-        Menu menu = new Menu(scanner);
-
-        while (this.position < this.map) {
-            int playerAction = menu.nextTurnChoice();
-
-            if (playerAction == 1) {
-                System.out.println("Your position: " + this.position);
-                /**
-                 * Lance le dés
-                 */
-                this.dice = this.rollDice();
-
-                //Passe la valeur du dés au pannel pour pouvoir faire scroller la fenetre de jeu
-                panel.setDice(this.dice);
-
-                // Passe moving a true pour jouer l'animation RUN et faire avancer la frame du joueur en fonction du jet de dés
-                this.moving = true;
-                panel.setMoving(this.moving);
-
-                //Passe moving a false pour jouer l'animation IDLE quand la frame du joueur reste sur place
-                this.moving = false;
-
-                this.playerMouve(dice);
-            }
-
-            waitSecond(1000);
-            System.out.println("Your player advance of " + dice + " case(s)");
-        }
 
 
 
-        if (this.position == map) {
-            asciiArt.congratulation();
-            waitSecond(longWait);
-        } else {
-            throw new PersoOutOfMapException();
-        }
+
+
+//        Panel panel = new Panel();
+//        DisplayGameAnimation displayGameAnimation = new DisplayGameAnimation(panel);
+//        int pixelMouv = 0;
+//
+//        while (this.position < this.map) {
+//
+//            System.out.println("Your position: " + this.position);
+//            /**
+//             * Lance le dés
+//             */
+//            this.dice = this.rollDice();
+//            this.playerMouve(dice);
+//            panel.setMoving(true);
+//            pixelMouv = (this.position * 5);
+//            panel.changeXDelta(pixelMouv);
+//            System.out.println(panel.getxDelta());
+//            waitSecond(500);
+//            panel.setMoving(false);
+//            System.out.println("Your player advance of " + dice + " case(s)");
+//        }
+//
+//
+//        if (this.position == map) {
+//            asciiArt.congratulation();
+//            waitSecond(longWait);
+//        } else {
+//            throw new PersoOutOfMapException();
+//        }
     }
 
     public int getMap() {
@@ -122,11 +113,11 @@ public class Game {
         return dice;
     }
 
-    public Personnage getPlayer() {
+    public Character getPlayer() {
         return player;
     }
 
-    public void setPlayer(Personnage player) {
+    public void setPlayer(Character player) {
         this.player = player;
     }
 }

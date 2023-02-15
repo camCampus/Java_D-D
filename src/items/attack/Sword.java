@@ -1,5 +1,7 @@
 package src.items.attack;
 
+import src.factory.FillLevel;
+
 public class Sword extends AttackItem {
 
     private SwordList name;
@@ -29,4 +31,14 @@ public class Sword extends AttackItem {
         return description;
     }
 
+    public Sword createSword(FillLevel level) {
+        Sword sword;
+
+        if (level == FillLevel.Easy ) {
+            sword = new Sword(SwordList.Ghostwalker, 3);
+        } else {
+            sword = new Sword(SwordList.Extinction, 7);
+        }
+        return sword;
+    }
 }

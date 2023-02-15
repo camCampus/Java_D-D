@@ -1,12 +1,8 @@
 package src;
 
 import src.asset.AsciiArt;
-import src.exception.PersoOutOfMapException;
-import src.game.Game;
 import src.menu.*;
-import src.window.DisplayGameAnimation;
-import src.window.GameWindow;
-import src.window.Panel;
+import src.menu.createPlayer.CreatePlayerMenu;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,12 +71,13 @@ public class Main {
         boolean run = true;
         Scanner scanner = new Scanner(System.in);
         Random random = new Random();
+        AsciiArt asciiArt = new AsciiArt();
         List<MenuActionEntry> entry = new ArrayList<>();
         entry.add(new CreatePlayerMenu(scanner, random));
-        entry.add(new LunchGame(scanner));
+        entry.add(new LunchGame(scanner, asciiArt));
         entry.add(new ExitGameMenu(scanner));
-        MainMenu menu = new MainMenu(scanner,entry);
-        AsciiArt asciiArt = new AsciiArt();
+        Menu menu = new Menu(scanner,entry);
+
 
         while (run) {
             exitGame = menu.runMenu();

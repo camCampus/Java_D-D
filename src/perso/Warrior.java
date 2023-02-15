@@ -1,13 +1,13 @@
 package src.perso;
 
-public class Warrior extends Personnage {
+public class Warrior extends Character {
 
     private String typeAttack;
     private String typeDefense;
     private String weaponAttack;
     private String protectionDefense;
 
-    public Warrior(String name, TypePersonage type) {
+    public Warrior(String name, TypeCharacter type) {
         super(name, type);
         this.typeAttack = "no item";
         this.typeDefense = "no item";

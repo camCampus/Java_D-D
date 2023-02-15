@@ -1,7 +1,7 @@
 package src;
 
 import src.game.Game;
-import src.perso.Personnage;
+import src.perso.Character;
 
 import java.util.Random;
 import java.util.Scanner;
@@ -9,13 +9,14 @@ import java.util.Scanner;
 public final class App {
 
     private static App instance;
-    private Personnage personnage;
-
+    private Character character;
+    private int boardSize;
 
     private Game game;
     private App() {
-        this.personnage = null;
+        this.character = null;
         this.game = null;
+        this.boardSize = 64;
     }
 
     public static App getInstance() {
@@ -25,15 +26,20 @@ public final class App {
         return instance;
     }
 
-    public void setPersonnage(Personnage personnage , Random random) {
-        this.personnage = personnage;
-        this.game = new Game(personnage, random, new Scanner(System.in));
+    public void setPersonnage(Character character, Random random, Scanner scanner) {
+        this.character = character;
+        this.game = new Game(character, random, scanner);
     }
 
     public Game getGame() {
         return game;
     }
-    public Personnage getPersonnage() {
-        return personnage;
+
+    public int getBoardSize() {
+        return boardSize;
+    }
+
+    public Character getPersonnage() {
+        return character;
     }
 }

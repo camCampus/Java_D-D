@@ -8,4 +8,7 @@ public abstract class AttackItem {
         this.type = type;
     }
 
+    public TypeAttack getType() {
+        return type;
+    }
 }

@@ -13,6 +13,7 @@ public class DisplayGameAnimation implements Runnable {
         this.scrollPos = 0;
         this.panel = panel;
         this.gameWindow = new GameWindow(panel);
+        this.panel.setGameWindow(gameWindow);
         panel.requestFocus();
         startGameLoop();
     }
@@ -26,14 +27,15 @@ public class DisplayGameAnimation implements Runnable {
     public void run() {
 
             while (gameThread != null) {
-                if (panel.getMoving()) {
-                    this.gameWindow.goTo((int)panel.getxDelta(), 0);
-                }
 
                 long now = System.currentTimeMillis();
                 panel.repaint();
                 long afterDraw = System.currentTimeMillis();
                 long delta = afterDraw - now;
+
+//                if (panel.getMoving()) {
+//                    this.gameWindow.goTo((int)panel.getxDelta(), 0);
+//                }
                 try {
                     Thread.sleep(16);
                 } catch (InterruptedException e) {
