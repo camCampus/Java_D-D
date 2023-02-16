@@ -1,29 +1,61 @@
 package src.items.defense;
+import src.board.LevelSelection;
+import src.perso.TypeCharacter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class Shield extends DefenseItem{
 
-  private ShieldList name;
+  private String name;
   private int stats;
   private String description;
 
-    public Shield(ShieldList shield, int stats){
+  private Random random;
+
+    public Shield(LevelSelection level){
         super(TypeDefense.Shield);
-        this.name = shield;
-        this.stats = stats;
-        this.description = getDescription(shield);
+        this.random = new Random();
+        this.name = selectName();
+        this.stats = selectStats(level);
+        this.description = getDescription(name);
     }
 
+    private String selectName() {
+        int rand = random.nextInt(ShieldList.values().length);
+        List<String> shieldList = new ArrayList<>();
 
+        for (ShieldList shield : ShieldList.values()) {
+            shieldList.add(shield.name());
+        }
+        return shieldList.get(rand);
+    }
+    private int selectStats(LevelSelection level) {
+        int easy = random.nextInt(1, 6);
+        int hard = random.nextInt(6 , 11);
+        int stats;
+        if (level == LevelSelection.Easy) {
+            stats = easy;
+        } else {
+            stats = hard;
+        }
+        return stats;
+    }
 
-    public String getDescription(ShieldList shield) {
+    public String getDescription(String shield) {
         String description = "";
         switch (shield){
-            case Starter ->
+            case "Wood" ->
                 description = "Old shield made in wood ";
 
-            case StealShield ->
+            case "Steal" ->
                 description = "Nice big shield made in steal";
         }
         return description;
+    }
+
+    @Override
+    protected TypeCharacter getUseBy() {
+        return TypeCharacter.Warrior;
     }
 }

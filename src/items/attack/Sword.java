@@ -1,44 +1,83 @@
 package src.items.attack;
 
-import src.factory.FillLevel;
+import src.board.LevelSelection;
+import src.perso.TypeCharacter;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class Sword extends AttackItem {
 
-    private SwordList name;
+    private String name;
     private int stats;
     private String description;
-    public Sword(SwordList sword, int stats){
+    private Random random;
+
+    public Sword(LevelSelection level){
         super(TypeAttack.Sword);
-        this.name = sword;
-        this.stats = stats;
-        this.description = getDescription(sword);
+        this.random = new Random();
+        this.name = selectName();
+        this.stats = selectStats(level);
+        this.description = getDescription(name);
     }
 
 
-    public String getDescription(SwordList sword) {
+
+    private String selectName() {
+        int val = SwordList.values().length;
+        int rand = random.nextInt(val);
+        List<String> swordList = new ArrayList<>();
+
+        for (SwordList sword : SwordList.values()) {
+            swordList.add(sword.name());
+        }
+        return swordList.get(rand);
+    }
+
+    private int selectStats(LevelSelection level) {
+        int easy = random.nextInt(1, 6);
+        int hard = random.nextInt(6 , 11);
+        int stats;
+        if (level == LevelSelection.Easy) {
+            stats = easy;
+        } else {
+            stats = hard;
+        }
+        return stats;
+    }
+
+    public String getDescription(String sword) {
         String description = "";
         switch (sword){
-            case Starter ->
-                description = "Old sword, she deal more damage if you take it by the blade and hit with the handle";
 
-            case Ghostwalker ->
+            case "Ghostwalker" ->
                 description = "The Ghostwalker is a warrior's sword, feared by all who cross its path. Its sleek and mysterious design is matched only by its unparalleled sharpness and strength.";
 
-            case Extinction ->
+            case "Extinction" ->
                 description = "The Extinction sword is a weapon of legend, said to hold the power to bring an end to all that stands in its path. Its gleaming blade, forged from the finest of metals, is etched with runes of immense power.";
 
         }
         return description;
     }
 
-    public Sword createSword(FillLevel level) {
-        Sword sword;
-
-        if (level == FillLevel.Easy ) {
-            sword = new Sword(SwordList.Ghostwalker, 3);
-        } else {
-            sword = new Sword(SwordList.Extinction, 7);
-        }
-        return sword;
+    public String getName() {
+        return name;
     }
+
+    public int getStats() {
+        return stats;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+
+    @Override
+    protected TypeCharacter getUseBy() {
+        return TypeCharacter.Warrior;
+    }
+
+
 }

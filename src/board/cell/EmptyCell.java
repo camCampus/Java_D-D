@@ -1,10 +1,16 @@
 package src.board.cell;
 
-import src.board.Board;
-import src.board.CellEntry;
+import src.items.Item;
 
-public class EmptyCell implements CellEntry {
+public class EmptyCell extends Cell{
+
     @Override
-    public void apply(Board board) {
+    public Cell getTypeCell() {
+        return this;
+    }
+
+    @Override
+    public Item getAllItem() {
+        return null;
     }
 }

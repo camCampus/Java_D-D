@@ -1,4 +1,7 @@
 package src.perso;
+import src.items.attack.AttackItem;
+import src.items.defense.DefenseItem;
+
 import java.util.Random;
 
 public abstract class Character {

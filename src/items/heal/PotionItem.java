@@ -1,8 +1,10 @@
-package src.items;
+package src.items.heal;
+
+import src.items.Item;
 
 import java.util.Random;
 
-public class PotionItem {
+public class PotionItem implements Item {
     private int up;
     public PotionItem() {
         this.up = randPotion();
@@ -17,5 +19,10 @@ public class PotionItem {
             val = 5;
         }
         return val;
+    }
+
+    @Override
+    public void applyEffect() {
+
     }
 }

@@ -1,60 +1,77 @@
 package src.board.cell;
-import src.App;
-import src.board.Board;
-import src.board.CellEntry;
-import src.factory.FillLevel;
-import src.items.PotionItem;
+
+import src.board.LevelSelection;
 import src.items.attack.AttackItem;
+import src.items.attack.Spell;
 import src.items.attack.Sword;
-import src.items.attack.TypeAttack;
 import src.items.defense.DefenseItem;
-import src.perso.Character;
-import src.perso.TypeCharacter;
+import src.items.defense.MagicShield;
+import src.items.defense.Shield;
+import src.items.heal.PotionItem;
+import src.items.Item;
 
 import java.util.Random;
 
-public class LootCell implements CellEntry {
+public class LootCell extends Cell {
 
-    private AttackItem weapon;
-    private DefenseItem shield;
+ private Random random;
+ private Item item;
 
-    private PotionItem potion;
-    private FillLevel level;
-    private Random random;
-    public LootCell(FillLevel level) {
-        this.level = level;
-        this.potion = new PotionItem();
-        this.weapon = createAttackItem();
-        this.random = new Random();
+ private LevelSelection level;
+ public LootCell(LevelSelection level) {
+     this.random = new Random();
+     this.level = level;
+     createLootItem();
+ }
+    private void createLootItem() {
+     int rand = random.nextInt(3);
+
+     switch (rand) {
+         case 0 -> this.item = createAttackItem(this.level);
+         case 1 -> this.item = createDefenseItem(this.level);
+         case 2 -> this.item = createPotionItem();
+     }
     }
-    @Override
-    public void apply(Board board) {
-        //Check le type du perso
 
-    }
+    private AttackItem createAttackItem(LevelSelection level) {
+     int rand = random.nextInt(2);
+     AttackItem item = null;
 
-    private TypeCharacter checkType() {
-       Character character = App.getInstance().getPersonnage();
-       return character.getType();
-    }
-    private AttackItem createAttackItem() {
-        AttackItem item;
-        int rand = this.random.nextInt(2);
-        if (this.level == FillLevel.Easy) {
-            switch (rand) {
-                case 0 -> item = new Sword()
-            }
+        switch (rand) {
+            case 0 -> item = new Sword(level);
+            case 1 -> item = new Spell(level);
         }
+
+        return item;
     }
-    public AttackItem getWeapon() {
-        return weapon;
+    private DefenseItem createDefenseItem(LevelSelection level) {
+        int rand = random.nextInt(2);
+        DefenseItem item = null;
+
+        switch (rand) {
+            case 0 -> item = new Shield(level);
+            case 1 -> item = new MagicShield(level);
+        }
+
+        return item;
+    }
+    private PotionItem createPotionItem() {
+        PotionItem item = new PotionItem();
+        return item;
     }
 
-    public DefenseItem getShield() {
-        return shield;
+    public Item getItem() {
+        return item;
     }
 
-    public PotionItem getPotion() {
-        return potion;
+
+    @Override
+    public Cell getTypeCell() {
+        return this;
+    }
+
+    @Override
+    public Item getAllItem() {
+        return this.item;
     }
 }

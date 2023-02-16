@@ -1,27 +1,9 @@
 package src.monster;
 
-public class Sorcerer {
-    private int life;
-    private int attack;
+import src.board.LevelSelection;
 
-    public Sorcerer() {
-        this.life = 9;
-        this.attack = 2;
-    }
-
-    public int getLife() {
-        return life;
-    }
-
-    public void setLife(int life) {
-        this.life = life;
-    }
-
-    public int getAttack() {
-        return attack;
-    }
-
-    public void setAttack(int attack) {
-        this.attack = attack;
+public class Sorcerer extends Monster{
+    public Sorcerer(MonsterType monsterType, LevelSelection level) {
+        super(monsterType, level);
     }
 }

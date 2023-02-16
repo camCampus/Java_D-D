@@ -1,12 +1,9 @@
 package src.game;
 
 import src.asset.AsciiArt;
-import src.board.Board;
-import src.board.CellEntry;
 import src.exception.PersoOutOfMapException;
 import src.perso.Character;
 
-import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -71,7 +68,7 @@ public class Game {
 
     public void gameLoop() throws PersoOutOfMapException {
 
-
+// Création du board de jeux !
 
 
 

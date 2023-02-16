@@ -1,38 +1,62 @@
 package src.items.attack;
 
-import src.factory.FillLevel;
+import src.board.LevelSelection;
+import src.perso.TypeCharacter;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class Spell extends AttackItem{
 
-    private SpellList name;
+    private String name;
     private int stats;
     private String description;
 
-    public Spell(SpellList spell, int stats) {
+    private Random random;
+
+    public Spell(LevelSelection level) {
         super(TypeAttack.Sort);
-        this.name = spell;
-        this.stats = stats;
-        this.description = getDescription(spell);
+        this.random = new Random();
+        this.name = selectName();
+        this.stats = selectStats(level);
+        this.description = getDescription(name);
     }
-    public String getDescription(SpellList spell) {
+
+    private String selectName() {
+        int val = SpellList.values().length;
+        int rand = random.nextInt(val);
+        List<String> spellList = new ArrayList<>();
+
+        for (SpellList spell : SpellList.values()) {
+            spellList.add(spell.name());
+        }
+        return spellList.get(rand);
+    }
+
+    private int selectStats(LevelSelection level) {
+        int easy = random.nextInt(1, 6);
+        int hard = random.nextInt(6 , 11);
+        int stats;
+        if (level == LevelSelection.Easy) {
+            stats = easy;
+        } else {
+            stats = hard;
+        }
+        return stats;
+    }
+    public String getDescription(String spell) {
         String description = "";
 
         switch (spell) {
-            case Startet -> description = "Genrique shazam spell...";
-            case IceArrow -> description = "Ice Arrow hurt ans slowdown the enemy";
-            case FireBlast -> description = "Ball of fire, hurt and burn the enemy";
+            case "IceArrow" -> description = "Ice Arrow hurt ans slowdown the enemy";
+            case "FireBlast" -> description = "Ball of fire, hurt and burn the enemy";
         }
         return description;
     }
 
-    public Spell createSpell(FillLevel level) {
-        Spell spell;
-
-        if (level == FillLevel.Easy ) {
-            spell = new Spell(SpellList.FireBlast, 3);
-        } else {
-            spell = new Spell(SpellList.IceArrow, 7);
-        }
-        return spell;
+    @Override
+    protected TypeCharacter getUseBy() {
+        return TypeCharacter.Wizard;
     }
 }
