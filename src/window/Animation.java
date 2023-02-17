@@ -8,7 +8,7 @@ import java.util.Objects;
 
 public class Animation {
 
-    private BufferedImage[] idleAnim , runAnim , chestAnim, dragonAnim;
+    private BufferedImage[] idleAnim , runAnim , chestAnim, demonAnim;
     private BufferedImage image, dragonImage;
     private int map = 64;
 
@@ -17,7 +17,7 @@ public class Animation {
         this.idleAnim = new BufferedImage[3];
         this.runAnim = new BufferedImage[3];
         this.chestAnim = new BufferedImage[2];
-        this.dragonAnim = new BufferedImage[7];
+        this.demonAnim = new BufferedImage[3];
     }
 
     public void importImg() {
@@ -34,20 +34,7 @@ public class Animation {
             }
         }
     }
-    public void importDragon() {
-        InputStream is = getClass().getResourceAsStream("/GreatRedWyrmIdleSide.png");
-        try {
-            this.dragonImage = ImageIO.read(Objects.requireNonNull(is));
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                is.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+
 
     public void idleAnim() {
         for (int i = 0; i < idleAnim.length; i++) {
@@ -67,14 +54,14 @@ public class Animation {
         }
     }
 
-    public void dragonAnime() {
-        for (int i = 0; i < dragonAnim.length; i++) {
-            this.dragonAnim[i] = this.dragonImage.getSubimage(i * 16 , 0, 32, 32);
+    public void demonANim() {
+        for (int i = 0; i < demonAnim.length; i++) {
+            this.demonAnim[i] = this.image.getSubimage(i * 16 + 16, 364, 32, 36);
         }
     }
 
-    public BufferedImage[] getDragonAnim() {
-        return dragonAnim;
+    public BufferedImage[] getDemonAnim() {
+        return demonAnim;
     }
 
     public BufferedImage getfloorDraw() {

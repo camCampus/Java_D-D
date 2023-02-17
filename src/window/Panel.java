@@ -30,7 +30,7 @@ public class Panel extends JPanel {
         this.gameBoard = null;
         this.animation = new Animation();
         this.animation.importImg();
-        this.animation.importDragon();
+
 
         animation.runAnim();
         animation.idleAnim();
@@ -96,11 +96,11 @@ public class Panel extends JPanel {
         super.paintComponent(draw);
         BufferedImage[] select = selectAnimation(this.moving);
         BufferedImage[] chest = animation.getChestAnim();
-        BufferedImage[] dragon = animation.getDragonAnim();
+        BufferedImage[] demon = animation.getDemonAnim();
 
         updateAnimationTick(select);
         updateAnimationTick(chest);
-        //updateAnimationTick(dragon);
+        updateAnimationTick(demon);
 
         this.gameWindow.goTo((int) xDelta, 0);
 
@@ -139,8 +139,7 @@ public class Panel extends JPanel {
             }
         }
 
-        draw.drawImage(animation.dragIMG(), 4080, 65, 64, 128, null);
-        //draw.drawImage(dragon[aniIndex], 4080, (int) yDelta, 64, 128, null);
+        draw.drawImage(demon[aniIndex], 4080, (int) yDelta, 64, 128, null);
         draw.drawImage(select[aniIndex], (int) xDelta, (int) yDelta, 64, 128, null);
     }
     public float getxDelta() {
