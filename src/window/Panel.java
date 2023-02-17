@@ -1,11 +1,15 @@
 package src.window;
 
+import src.board.cell.Cell;
+import src.board.cell.LootCell;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.Objects;
 
 public class Panel extends JPanel {
@@ -15,17 +19,22 @@ public class Panel extends JPanel {
     private int aniTick, aniIndex, aniSpeed = 15;
     private Animation animation;
     private boolean moving;
-    private int map = 64;
+    private int map = 66;
 
     private GameWindow gameWindow;
 
+    private List<Cell> gameBoard;
+
 
     public Panel() {
+        this.gameBoard = null;
         this.animation = new Animation();
         this.animation.importImg();
+        this.animation.importDragon();
 
         animation.runAnim();
         animation.idleAnim();
+        animation.chestAnim();
 
         this.setPanelSize();
         addKeyListener(new KeyboardInput(this));
@@ -46,7 +55,7 @@ public class Panel extends JPanel {
      * @param value
      */
     public void changeXDelta(int value) {
-        this.xDelta += value;
+        this.xDelta = value;
     }
 
 
@@ -86,8 +95,16 @@ public class Panel extends JPanel {
     public void paintComponent(Graphics draw) {
         super.paintComponent(draw);
         BufferedImage[] select = selectAnimation(this.moving);
+        BufferedImage[] chest = animation.getChestAnim();
+        BufferedImage[] dragon = animation.getDragonAnim();
+
         updateAnimationTick(select);
+        updateAnimationTick(chest);
+        //updateAnimationTick(dragon);
+
         this.gameWindow.goTo((int) xDelta, 0);
+
+
         draw.drawImage(animation.getfloorDraw(), 0, 80, 64, 64, null);
         draw.drawImage(animation.getfloorDraw(), 0, 144, 64, 64, null);
         draw.drawImage(animation.getfloorDraw(), 0, 208, 64, 64, null);
@@ -109,12 +126,29 @@ public class Panel extends JPanel {
         }
 
         draw.drawImage(animation.getRedBanner(), 500, 16, 64, 64, null);
-        draw.drawImage(animation.getRedBanner(), 3000, 16, 64, 64, null);
-        draw.drawImage(select[aniIndex], (int) xDelta, (int) yDelta, 64, 128, null);
+        draw.drawImage(animation.getRedBanner(), 4144, 16, 64, 64, null);
 
+
+
+        if (this.gameBoard != null) {
+            for (int i=0; i < this.gameBoard.size(); i++) {
+                Cell cell = this.gameBoard.get(i);
+                if (cell instanceof LootCell) {
+                    draw.drawImage(chest[aniIndex], i*64, (int)yDelta, 64, 128, null);
+                }
+            }
+        }
+
+        draw.drawImage(animation.dragIMG(), 4080, 65, 64, 128, null);
+        //draw.drawImage(dragon[aniIndex], 4080, (int) yDelta, 64, 128, null);
+        draw.drawImage(select[aniIndex], (int) xDelta, (int) yDelta, 64, 128, null);
     }
     public float getxDelta() {
         return xDelta;
+    }
+
+    public void setGameBoard(List<Cell> gameBoard) {
+        this.gameBoard = gameBoard;
     }
 
     public void setMoving(boolean moving) {

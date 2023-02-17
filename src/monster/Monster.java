@@ -9,33 +9,15 @@ public abstract class Monster {
     private int power;
     private Random random;
 
-    protected Monster(MonsterType monsterType, LevelSelection level) {
+    protected Monster( LevelSelection level) {
         this.random = new Random();
-        this.life = Life(monsterType, level);
-        this.power = Power(monsterType, level);
+        this.life = Life(level);
+        this.power = Power(level);
     }
 
-    private int Power(MonsterType monsterType,  LevelSelection level) {
-        int power = 0;
-        switch (monsterType) {
-            case Gobelin -> power=1;
-            case Sorcerer -> power=2;
-            case Dragon -> power=4;
-        }
-        power = (level == LevelSelection.Hard) ? power * 3 : power ;
-        return power;
-    }
+    public abstract int Power(LevelSelection level);
 
-    private int Life(MonsterType monsterType,  LevelSelection level) {
-        int life = 0;
-        switch (monsterType) {
-            case Gobelin -> life=6;
-            case Sorcerer -> life=9;
-            case Dragon -> life=15;
-        }
-        life = (level == LevelSelection.Hard) ? life * 2 : life ;
-        return life;
-    }
+    public abstract int Life(LevelSelection level);
 
     public int getLife() {
         return life;

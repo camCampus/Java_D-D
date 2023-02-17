@@ -30,6 +30,10 @@ public class Board {
         return entry;
     }
 
+    public void setEntry(List<Cell> entry) {
+        this.entry = entry;
+    }
+
     public int getBoardLengt() {
         return BOARD_LENGTH;
     }

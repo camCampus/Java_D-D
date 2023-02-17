@@ -21,9 +21,9 @@ public class MonsterCell extends Cell {
         Monster monster = null;
 
         switch (rand) {
-            case 0 -> monster = new Dragon(MonsterType.Dragon, level);
-            case 1 -> monster = new Gobelin(MonsterType.Gobelin, level);
-            case 2 -> monster = new Sorcerer(MonsterType.Sorcerer, level);
+            case 0 -> monster = new Dragon(level);
+            case 1 -> monster = new Gobelin(level);
+            case 2 -> monster = new Sorcerer(level);
         }
         return monster;
     }
