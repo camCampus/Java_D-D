@@ -9,17 +9,14 @@ import java.util.Random;
 
 public class Sword extends AttackItem {
 
-    private String name;
-    private int stats;
-    private String description;
+
     private Random random;
 
     public Sword(LevelSelection level){
-        super(TypeAttack.Sword);
         this.random = new Random();
-        this.name = selectName();
-        this.stats = selectStats(level);
-        this.description = getDescription(name);
+        this.setName(selectName()) ;
+        this.setStats(selectStats(level));
+        this.setDescription(getDescription(this.getName()));
     }
 
 
@@ -55,24 +52,11 @@ public class Sword extends AttackItem {
                 description = "The Ghostwalker is a warrior's sword, feared by all who cross its path. Its sleek and mysterious design is matched only by its unparalleled sharpness and strength.";
 
             case "Extinction" ->
-                description = "The Extinction sword is a weapon of legend, said to hold the power to bring an end to all that stands in its path. Its gleaming blade, forged from the finest of metals, is etched with runes of immense power.";
+                description = "The Extinction sword is a weapon of legend, said to hold the power to bring an end to all that stands in its path. \n Its gleaming blade, forged from the finest of metals, is etched with runes of immense power.";
 
         }
         return description;
     }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getStats() {
-        return stats;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
 
     @Override
     protected TypeCharacter getUseBy() {

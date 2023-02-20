@@ -9,13 +9,13 @@ public class Dragon extends Monster{
 
 
     @Override
-    public int Power(LevelSelection level) {
+    public int setPower(LevelSelection level) {
         int power = (level == LevelSelection.Easy)? 4: 8;
         return power;
     }
 
     @Override
-    public int Life(LevelSelection level) {
+    public int setLife(LevelSelection level) {
         int life = (level == LevelSelection.Easy)? 15: 22;
         return life;
     }

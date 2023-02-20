@@ -8,14 +8,14 @@ public class Gobelin extends Monster{
     }
 
     @Override
-    public int Power(LevelSelection level) {
-        int power = (level == LevelSelection.Easy)? 1: 3;
+    public int setPower(LevelSelection level) {
+        int power = (level == LevelSelection.Easy)? 1: 9;
         return power;
     }
 
     @Override
-    public int Life(LevelSelection level) {
-        int life = (level == LevelSelection.Easy)? 6: 10;
+    public int setLife(LevelSelection level) {
+        int life = (level == LevelSelection.Easy)? 6: 16;
         return life;
     }
 }

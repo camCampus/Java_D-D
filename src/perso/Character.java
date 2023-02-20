@@ -1,4 +1,5 @@
 package src.perso;
+import src.items.Item;
 import src.items.attack.AttackItem;
 import src.items.defense.DefenseItem;
 
@@ -26,14 +27,20 @@ public abstract class Character {
      */
     private int power;
 
+    private AttackItem attackItem ;
+    private DefenseItem defenseItem;
+
+    private boolean alive;
     private Random random;
     Character(String name, TypeCharacter type) {
         this.name = name;
         this.type = type;
         this.life = randomLife(type);
         this.power = randomPower(type);
+        this.attackItem = null;
+        this.defenseItem = null;
+        this.alive = true;
     }
-
 
 
     public int randomLife(TypeCharacter type) {
@@ -84,6 +91,29 @@ public abstract class Character {
         this.power = power;
     }
 
+    public AttackItem getAttackItem() {
+        return attackItem;
+    }
+
+    public void setAttackItem(AttackItem attackItem) {
+        this.attackItem = attackItem;
+    }
+
+    public DefenseItem getDefenseItem() {
+        return defenseItem;
+    }
+
+    public void setDefenseItem(DefenseItem defenseItem) {
+        this.defenseItem = defenseItem;
+    }
+
+    public boolean isAlive() {
+        return alive;
+    }
+
+    public void setAlive(boolean alive) {
+        this.alive = alive;
+    }
 }
 
 

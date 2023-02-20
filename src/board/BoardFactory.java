@@ -62,23 +62,20 @@ public class BoardFactory {
             for (int i = 32; i < fillList.size(); i++) {
                 if (i - 1 >= 0) {
                     if (fillList.get(i - 1) instanceof LootCell) {
-                        int rand = random.nextInt(2);
-                        switch (rand) {
-                            case 0 -> fillList.set(i, new MonsterCell(LevelSelection.Easy));
-                            case 1 -> fillList.set(i, new EmptyCell());
-                        }
+
+                        fillList.set(i, new MonsterCell(LevelSelection.Hard));
 
                     } else if (fillList.get(i - 1) instanceof MonsterCell) {
                         int rand = random.nextInt(2);
                         switch (rand) {
-                            case 0 -> fillList.set(i, new LootCell(LevelSelection.Easy));
+                            case 0 -> fillList.set(i, new LootCell(LevelSelection.Hard));
                             case 1 -> fillList.set(i, new EmptyCell());
                         }
                     } else if (fillList.get(i - 1) instanceof EmptyCell) {
                         int rand = random.nextInt(2);
                         switch (rand) {
-                            case 0 -> fillList.set(i, new LootCell(LevelSelection.Easy));
-                            case 1 -> fillList.set(i, new MonsterCell(LevelSelection.Easy));
+                            case 0 -> fillList.set(i, new LootCell(LevelSelection.Hard));
+                            case 1 -> fillList.set(i, new MonsterCell(LevelSelection.Hard));
                         }
                     }
                 }

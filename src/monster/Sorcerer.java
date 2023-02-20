@@ -7,13 +7,13 @@ public class Sorcerer extends Monster{
         super(level);
     }
     @Override
-    public int Power(LevelSelection level) {
-        int power = (level == LevelSelection.Easy)? 2: 5;
+    public int setPower(LevelSelection level) {
+        int power = (level == LevelSelection.Easy)? 2: 15;
         return power;
     }
 
     @Override
-    public int Life(LevelSelection level) {
+    public int setLife(LevelSelection level) {
         int life = (level == LevelSelection.Easy)? 9: 20;
         return life;
     }

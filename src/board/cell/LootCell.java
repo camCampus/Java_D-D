@@ -1,5 +1,6 @@
 package src.board.cell;
 
+import src.App;
 import src.board.LevelSelection;
 import src.items.attack.AttackItem;
 import src.items.attack.Spell;
@@ -9,6 +10,8 @@ import src.items.defense.MagicShield;
 import src.items.defense.Shield;
 import src.items.heal.PotionItem;
 import src.items.Item;
+import src.perso.Character;
+import src.perso.TypeCharacter;
 
 import java.util.Random;
 
@@ -60,10 +63,6 @@ public class LootCell extends Cell {
         return item;
     }
 
-    public Item getItem() {
-        return item;
-    }
-
 
     @Override
     public Cell getTypeCell() {
@@ -73,5 +72,10 @@ public class LootCell extends Cell {
     @Override
     public Item getAllItem() {
         return this.item;
+    }
+
+    @Override
+    public void apply() {
+     this.item.applyEffect();
     }
 }

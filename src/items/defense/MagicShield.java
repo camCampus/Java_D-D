@@ -16,11 +16,10 @@ public class MagicShield extends DefenseItem {
 
     private Random random;
     public MagicShield(LevelSelection level) {
-        super(TypeDefense.MagicShield);
         this.random = new Random();
-        this.name = selectName();
-        this.stats = selectStats(level);
-        this.description = getDescription(name);
+        this.setName(selectName()) ;
+        this.setStats(selectStats(level));
+        this.setDescription(getDescription(this.getName()));
     }
 
     private String selectName() {
@@ -58,7 +57,6 @@ public class MagicShield extends DefenseItem {
         }
         return description;
     }
-
 
     @Override
     protected TypeCharacter getUseBy() {

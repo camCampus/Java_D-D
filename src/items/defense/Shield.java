@@ -14,11 +14,10 @@ public class Shield extends DefenseItem{
   private Random random;
 
     public Shield(LevelSelection level){
-        super(TypeDefense.Shield);
         this.random = new Random();
-        this.name = selectName();
-        this.stats = selectStats(level);
-        this.description = getDescription(name);
+        this.setName(selectName()) ;
+        this.setStats(selectStats(level));
+        this.setDescription(getDescription(this.getName()));
     }
 
     private String selectName() {
@@ -53,6 +52,7 @@ public class Shield extends DefenseItem{
         }
         return description;
     }
+
 
     @Override
     protected TypeCharacter getUseBy() {

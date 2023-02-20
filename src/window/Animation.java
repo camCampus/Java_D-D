@@ -8,7 +8,7 @@ import java.util.Objects;
 
 public class Animation {
 
-    private BufferedImage[] idleAnim , runAnim , chestAnim, demonAnim;
+    private BufferedImage[] idleAnim , runAnim , chestAnim, demonAnim, littleDemonANim;
     private BufferedImage image, dragonImage;
     private int map = 64;
 
@@ -16,8 +16,9 @@ public class Animation {
     public Animation() {
         this.idleAnim = new BufferedImage[3];
         this.runAnim = new BufferedImage[3];
-        this.chestAnim = new BufferedImage[2];
+        this.chestAnim = new BufferedImage[3];
         this.demonAnim = new BufferedImage[3];
+        this.littleDemonANim = new BufferedImage[3];
     }
 
     public void importImg() {
@@ -35,7 +36,15 @@ public class Animation {
         }
     }
 
+    public BufferedImage[] getLittleDemonANim() {
+        return littleDemonANim;
+    }
 
+    public void litteDemon() {
+        for (int i = 0; i < littleDemonANim.length; i++) {
+            this.littleDemonANim[i] = this.image.getSubimage(i * 16 + 368, 328, 16, 28);
+        }
+    }
     public void idleAnim() {
         for (int i = 0; i < idleAnim.length; i++) {
             this.idleAnim[i] = this.image.getSubimage(i * 16 + 128, 228, 16, 28);
@@ -56,7 +65,7 @@ public class Animation {
 
     public void demonANim() {
         for (int i = 0; i < demonAnim.length; i++) {
-            this.demonAnim[i] = this.image.getSubimage(i * 16 + 16, 364, 32, 36);
+            this.demonAnim[i] = this.image.getSubimage(i * 32 + 16, 364, 32, 36);
         }
     }
 

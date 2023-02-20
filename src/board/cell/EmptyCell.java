@@ -13,4 +13,9 @@ public class EmptyCell extends Cell{
     public Item getAllItem() {
         return null;
     }
+
+    @Override
+    public void apply() {
+        System.out.println("No effect empty cell");
+    }
 }

@@ -7,4 +7,14 @@ public class Wizard extends Character {
         super(name, type);
     }
 
+    @Override
+    public String toString() {
+        return  getName() + "\n" +
+                "Type: " + getType() + "\n" +
+                "Life: " + getLife() + "\n" +
+                "Power: " + getPower() + "\n";
+
+    }
+
+
 }

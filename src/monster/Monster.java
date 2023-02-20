@@ -11,13 +11,13 @@ public abstract class Monster {
 
     protected Monster( LevelSelection level) {
         this.random = new Random();
-        this.life = Life(level);
-        this.power = Power(level);
+        this.life = setPower(level);
+        this.power = setLife(level);
     }
 
-    public abstract int Power(LevelSelection level);
+    public abstract int setPower(LevelSelection level);
 
-    public abstract int Life(LevelSelection level);
+    public abstract int setLife(LevelSelection level);
 
     public int getLife() {
         return life;
@@ -41,6 +41,12 @@ public abstract class Monster {
 
     public void setRandom(Random random) {
         this.random = random;
+    }
+
+    @Override
+    public String toString() {
+        return  "Tadam a monster appears in front of you !! " + "\n" + "Stats: " + "\n" + "life: " + getLife()
+                + "\n" + "power: " + getPower();
     }
 
    // public abstract void runAttack();

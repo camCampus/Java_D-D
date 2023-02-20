@@ -1,20 +1,8 @@
 package src;
 
 import src.asset.AsciiArt;
-import src.board.Board;
-import src.board.BoardFactory;
-import src.board.LevelSelection;
-import src.board.cell.Cell;
-import src.board.cell.EmptyCell;
-import src.board.cell.LootCell;
-import src.board.cell.MonsterCell;
-import src.items.Item;
-import src.items.attack.Sword;
 import src.menu.*;
 import src.menu.createPlayer.CreatePlayerMenu;
-import src.monster.Dragon;
-import src.monster.Monster;
-import src.monster.MonsterType;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -8,20 +8,16 @@ import java.util.List;
 import java.util.Random;
 
 public class Spell extends AttackItem{
-
-    private String name;
-    private int stats;
-    private String description;
-
     private Random random;
 
     public Spell(LevelSelection level) {
-        super(TypeAttack.Sort);
         this.random = new Random();
-        this.name = selectName();
-        this.stats = selectStats(level);
-        this.description = getDescription(name);
+        this.setName(selectName()) ;
+        this.setStats(selectStats(level));
+        this.setDescription(getDescription(this.getName()));
     }
+
+
 
     private String selectName() {
         int val = SpellList.values().length;
@@ -54,6 +50,7 @@ public class Spell extends AttackItem{
         }
         return description;
     }
+
 
     @Override
     protected TypeCharacter getUseBy() {

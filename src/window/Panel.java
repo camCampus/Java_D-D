@@ -2,6 +2,7 @@ package src.window;
 
 import src.board.cell.Cell;
 import src.board.cell.LootCell;
+import src.board.cell.MonsterCell;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -35,6 +36,8 @@ public class Panel extends JPanel {
         animation.runAnim();
         animation.idleAnim();
         animation.chestAnim();
+        animation.demonANim();
+        animation.litteDemon();
 
         this.setPanelSize();
         addKeyListener(new KeyboardInput(this));
@@ -97,10 +100,13 @@ public class Panel extends JPanel {
         BufferedImage[] select = selectAnimation(this.moving);
         BufferedImage[] chest = animation.getChestAnim();
         BufferedImage[] demon = animation.getDemonAnim();
+        BufferedImage[] littleDemon = animation.getLittleDemonANim();
+
 
         updateAnimationTick(select);
         updateAnimationTick(chest);
         updateAnimationTick(demon);
+        updateAnimationTick(littleDemon);
 
         this.gameWindow.goTo((int) xDelta, 0);
 
@@ -135,11 +141,13 @@ public class Panel extends JPanel {
                 Cell cell = this.gameBoard.get(i);
                 if (cell instanceof LootCell) {
                     draw.drawImage(chest[aniIndex], i*64, (int)yDelta, 64, 128, null);
+                } else if (cell instanceof MonsterCell) {
+                    draw.drawImage(littleDemon[aniIndex], i*64, (int)yDelta, 64, 128, null);
                 }
             }
         }
 
-        draw.drawImage(demon[aniIndex], 4080, (int) yDelta, 64, 128, null);
+        draw.drawImage(demon[aniIndex], 4080, (int) yDelta, 80, 144, null);
         draw.drawImage(select[aniIndex], (int) xDelta, (int) yDelta, 64, 128, null);
     }
     public float getxDelta() {

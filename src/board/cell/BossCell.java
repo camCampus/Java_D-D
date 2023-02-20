@@ -13,4 +13,9 @@ public class BossCell extends Cell{
     public Item getAllItem() {
         return null;
     }
+
+    @Override
+    public void apply() {
+
+    }
 }
