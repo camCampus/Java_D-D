@@ -1,9 +1,13 @@
 package src.items.attack;
 
+import com.diogonunes.jcolor.Attribute;
 import src.App;
+import src.asset.AsciiArt;
 import src.items.Item;
 import src.perso.Character;
 import src.perso.TypeCharacter;
+
+import static com.diogonunes.jcolor.Ansi.colorize;
 
 public abstract class AttackItem implements Item {
 
@@ -20,6 +24,8 @@ public abstract class AttackItem implements Item {
         Character player = App.getInstance().getPersonnage();
         TypeCharacter type = player.getType();
         int resetPlayerPower = player.getPower();
+        AsciiArt asciiArt = new AsciiArt();
+        System.out.println(colorize(".~~~| ITEM |~~~.", Attribute.TEXT_COLOR(255,0,255)));
         if (type == getUseBy()) {
 
             if (player.getAttackItem() == null) {

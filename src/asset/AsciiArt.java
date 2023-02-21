@@ -1,5 +1,11 @@
 package src.asset;
 
+import com.diogonunes.jcolor.Attribute;
+import src.App;
+import src.perso.Character;
+
+import static com.diogonunes.jcolor.Ansi.colorize;
+
 public class AsciiArt {
     public void drawWizzard() {
         System.out.println("                    ____\n" +
@@ -216,4 +222,5 @@ public class AsciiArt {
                 "                              `b  `       '  d'\n" +
                 "                               `             '");
     }
+
 }

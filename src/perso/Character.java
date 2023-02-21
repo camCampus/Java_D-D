@@ -29,7 +29,7 @@ public abstract class Character {
 
     private AttackItem attackItem ;
     private DefenseItem defenseItem;
-
+    private int defBonus;
     private boolean alive;
     private Random random;
     Character(String name, TypeCharacter type) {
@@ -40,6 +40,7 @@ public abstract class Character {
         this.attackItem = null;
         this.defenseItem = null;
         this.alive = true;
+        this.defBonus = 0;
     }
 
 
@@ -105,6 +106,14 @@ public abstract class Character {
 
     public void setDefenseItem(DefenseItem defenseItem) {
         this.defenseItem = defenseItem;
+    }
+
+    public int getDefBonus() {
+        return defBonus;
+    }
+
+    public void setDefBonus(int defBonus) {
+        this.defBonus = defBonus;
     }
 
     public boolean isAlive() {

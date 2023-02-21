@@ -1,10 +1,13 @@
 package src.items.heal;
 
+import com.diogonunes.jcolor.Attribute;
 import src.App;
 import src.items.Item;
 import src.perso.Character;
 
 import java.util.Random;
+
+import static com.diogonunes.jcolor.Ansi.colorize;
 
 public class PotionItem implements Item {
     private int up;
@@ -33,7 +36,7 @@ public class PotionItem implements Item {
 
     @Override
     public String toString() {
-        Character player = App.getInstance().getPersonnage();
-        return "You found life potion bonus " + this.up + "\n" + "You have now " + player.getLife() + " hp";
+        System.out.println(colorize(".~~~| ITEM |~~~.", Attribute.TEXT_COLOR(255,0,255)));
+        return "You found life potion bonus +" + colorize(""+this.up+"", Attribute.GREEN_TEXT())+"HP";
     }
 }

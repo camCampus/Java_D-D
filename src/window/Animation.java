@@ -1,5 +1,9 @@
 package src.window;
 
+import src.App;
+import src.perso.Character;
+import src.perso.Warrior;
+
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -36,6 +40,7 @@ public class Animation {
         }
     }
 
+
     public BufferedImage[] getLittleDemonANim() {
         return littleDemonANim;
     }
@@ -46,14 +51,27 @@ public class Animation {
         }
     }
     public void idleAnim() {
-        for (int i = 0; i < idleAnim.length; i++) {
-            this.idleAnim[i] = this.image.getSubimage(i * 16 + 128, 228, 16, 28);
+        Character player = App.getInstance().getPersonnage();
+        if (player instanceof Warrior) {
+            for (int i = 0; i < idleAnim.length; i++) {
+                this.idleAnim[i] = this.image.getSubimage(i * 16 + 128, 100, 16, 28);
+            }
+        } else {
+            for (int i = 0; i < idleAnim.length; i++) {
+                this.idleAnim[i] = this.image.getSubimage(i * 16 + 128, 164, 16, 28);
+            }
         }
     }
-
     public void runAnim() {
-        for (int i = 0; i < runAnim.length; i++) {
-            this.runAnim[i] = this.image.getSubimage(i * 16 + 192, 228, 16, 28);
+        Character player = App.getInstance().getPersonnage();
+        if (player instanceof Warrior) {
+            for (int i = 0; i < idleAnim.length; i++) {
+                this.idleAnim[i] = this.image.getSubimage(i * 16 + 192, 100, 16, 28);
+            }
+        } else {
+            for (int i = 0; i < idleAnim.length; i++) {
+                this.idleAnim[i] = this.image.getSubimage(i * 16 + 192, 164, 16, 28);
+            }
         }
     }
 

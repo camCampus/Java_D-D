@@ -1,10 +1,13 @@
 package src.items.defense;
 
 
+import com.diogonunes.jcolor.Attribute;
 import src.App;
 import src.items.Item;
 import src.perso.Character;
 import src.perso.TypeCharacter;
+
+import static com.diogonunes.jcolor.Ansi.colorize;
 
 public abstract class DefenseItem implements Item {
 
@@ -19,15 +22,17 @@ public abstract class DefenseItem implements Item {
     public void applyEffect() {
         Character character = App.getInstance().getPersonnage();
         TypeCharacter type = character.getType();
-
+        System.out.println(colorize(".~~~| ITEM |~~~.", Attribute.TEXT_COLOR(255,0,255)));
         if (type == getUseBy()) {
 
             if (character.getDefenseItem() == null) {
                 character.setDefenseItem(this);
+                character.setDefBonus(this.stats);
                 System.out.println("You found and equip this item: " + "\n" + this);
 
             } else if (character.getDefenseItem().getStats() < this.getStats()) {
                 character.setDefenseItem(this);
+                character.setDefBonus(this.stats);
                 System.out.println("You found and equip a better item nice !! : " + "\n" + this);
             }
 
@@ -62,6 +67,7 @@ public abstract class DefenseItem implements Item {
 
     @Override
     public String toString() {
+        System.out.println(colorize(".~~~| ITEM |~~~.", Attribute.TEXT_COLOR(255,0,255)));
         return getName() + "\n" + "defense bonus + " + getStats() + "\n" + "description : " + "\n" + getDescription();
     }
 }

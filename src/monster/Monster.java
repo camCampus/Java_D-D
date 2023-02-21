@@ -45,7 +45,14 @@ public abstract class Monster {
 
     @Override
     public String toString() {
-        return  "Tadam a monster appears in front of you !! " + "\n" + "Stats: " + "\n" + "life: " + getLife()
+        String monster = null;
+        if (this instanceof Dragon){monster = "Dragon";};
+        if (this instanceof Gobelin){monster = "Gobelin";};
+        if (this instanceof Sorcerer){monster = "Sorcerer";};
+        if (this instanceof Demon){monster = "Demon";};
+        if (this instanceof Orcs){monster = "Orcs";};
+        return  "Tadam a monster appears in front of you !! " + "\n" +
+                monster + "\n" + "life: " + getLife()
                 + "\n" + "power: " + getPower();
     }
 

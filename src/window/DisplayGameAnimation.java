@@ -27,15 +27,11 @@ public class DisplayGameAnimation implements Runnable {
     public void run() {
 
             while (gameThread != null) {
-
                 long now = System.currentTimeMillis();
                 panel.repaint();
                 long afterDraw = System.currentTimeMillis();
                 long delta = afterDraw - now;
 
-//                if (panel.getMoving()) {
-//                    this.gameWindow.goTo((int)panel.getxDelta(), 0);
-//                }
                 try {
                     Thread.sleep(16);
                 } catch (InterruptedException e) {

@@ -1,13 +1,18 @@
 package src.game;
 
+import com.diogonunes.jcolor.Attribute;
 import src.App;
 import src.asset.AsciiArt;
 import src.board.Board;
 import src.board.BoardFactory;
 import src.board.cell.Cell;
+import src.board.cell.MonsterCell;
+import src.dice.RollDice;
 import src.exception.PersoOutOfMapException;
 import src.menu.Menu;
 import src.menu.MenuActionEntry;
+import src.menu.inGame.Fight;
+import src.menu.inGame.Run;
 import src.perso.Character;
 import src.window.DisplayGameAnimation;
 import src.window.Panel;
@@ -17,6 +22,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
+import static com.diogonunes.jcolor.Ansi.colorize;
 import static src.utils.Utils.waitSecond;
 
 public class Game {
@@ -67,61 +73,95 @@ public class Game {
         this.actualCell = null;
     }
 
-    /**
-     * Fonction qui lance un dés a 6 faces
-     */
-    public int rollDice() {
-        int rand = this.random.nextInt(6);
-        rand++;
-        return rand;
-    }
 
+    /**
+     * Fonction qui actualise la position du joueur en fonction du lancer de dés
+     *
+     * @param dice
+     */
     public void playerMouve(int dice) {
         this.position = this.position + dice;
     }
 
+    /**
+     * La boucle de jeu
+     *
+     * @throws PersoOutOfMapException
+     */
     public void gameLoop() throws PersoOutOfMapException {
 
-// Création du board de jeux !
-
+        // Création du board de jeux !
         Board board = new Board();
-        BoardFactory boardFactory = new BoardFactory(board);
+        //Remplissage du board
+        new BoardFactory(board);
         this.gameBoard = board.getEntry();
 
-        boolean run = true;
-
+        //Création des élément pour affichage graphique
         Panel panel = new Panel();
         panel.setGameBoard(this.gameBoard);
-        DisplayGameAnimation displayGameAnimation = new DisplayGameAnimation(panel);
+        new DisplayGameAnimation(panel);
         int pixelMouv = 0;
 
-
-//        while (run) {
-//            List<MenuActionEntry> actionInGame = new ArrayList<>();
-//
-//            Menu menuInGame = new Menu(this.scanner, actionInGame);
-//        }
-
         while (this.position < this.gameBoard.size() && player.isAlive()) {
+
+
             String playerStats = App.getInstance().getPersonnage().toString();
-            System.out.println(playerStats );
+            waitSecond(300);
 
             //Player game
-            this.dice = rollDice();
+            RollDice roll = new RollDice();
+            this.dice = roll.getDice();
             playerMouve(this.dice);
             getPlayerCell();
-            System.out.println("Your player advance of " + dice + " case(s)");
-            System.out.println("position " + this.position );
+            waitSecond(300);
+            System.out.println(
+                    playerStats +
+                            colorize(".~~~| DICE |~~~.", Attribute.TEXT_COLOR(0, 255, 255)) + "\n" +
+                            "Your player advance of " + this.dice + " case(s)\n" +
+                            "position " + this.position);
+
 
             //Sprite update
             panel.setMoving(true);
             pixelMouv = (this.position * 64);
             panel.changeXDelta(pixelMouv);
-
             panel.setMoving(false);
 
+
             //Cell effect
-            this.actualCell.apply();
+            boolean runFight = true;
+
+                if (this.actualCell instanceof MonsterCell) {
+                    while (runFight) {
+                        waitSecond(300);
+                        System.out.println(colorize(".~~~| MONSTER |~~~.", Attribute.TEXT_COLOR(153, 0, 0)));
+                        System.out.println(((MonsterCell) this.actualCell).getMonster().toString());
+
+                        List<MenuActionEntry> fightMenu = new ArrayList<>();
+                        Run esc = new Run();
+                        fightMenu.add(esc);
+                        Fight fight = new Fight();
+                        fightMenu.add(fight);
+                        new Menu(this.scanner, fightMenu).runMenu();
+
+                        if (esc.isEscape()) {
+                            runFight = false;
+                            this.position = Math.max(0, (this.position - 2));
+                        } else {
+                            this.actualCell.apply();
+                            if (((MonsterCell) this.actualCell).getMonster().getLife() <= 0) {
+                                runFight = false;
+                            }
+                            if ()
+                        }
+                    }
+                } else {
+                    this.actualCell.apply();
+                }
+
+
+
+
             waitSecond(1500);
         }
 
@@ -138,6 +178,9 @@ public class Game {
         this.actualCell = this.gameBoard.get(this.position);
     }
 
+    public boolean lunchFight(boolean lunch) {
+        return lunch = true;
+    }
     public int getMap() {
         return map;
     }

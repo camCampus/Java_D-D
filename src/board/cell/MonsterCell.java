@@ -1,13 +1,18 @@
 package src.board.cell;
 
+import com.diogonunes.jcolor.Attribute;
 import src.App;
 import src.asset.AsciiArt;
 import src.board.LevelSelection;
 import src.items.Item;
 import src.monster.*;
 import src.perso.Character;
+import src.perso.Warrior;
+import src.perso.Wizard;
 
 import java.util.Random;
+
+import static com.diogonunes.jcolor.Ansi.colorize;
 
 public class MonsterCell extends Cell {
 
@@ -22,13 +27,15 @@ public class MonsterCell extends Cell {
     }
 
     private Monster createMonster(LevelSelection level) {
-        int rand = random.nextInt(3);
+        int rand = random.nextInt(5);
         Monster monster = null;
 
         switch (rand) {
             case 0 -> monster = new Dragon(level);
             case 1 -> monster = new Gobelin(level);
             case 2 -> monster = new Sorcerer(level);
+            case 3 -> monster = new Orcs(level);
+            case 4 -> monster = new Demon(level);
         }
         return monster;
     }
@@ -45,7 +52,6 @@ public class MonsterCell extends Cell {
 
     private boolean playerAttack(Character player) {
         boolean alive = true;
-
         System.out.println("You attack the monster and hit him with " + player.getPower());
         this.monster.setLife(this.monster.getLife() - player.getPower());
         if (this.monster.getLife() <= 0) {
@@ -57,9 +63,8 @@ public class MonsterCell extends Cell {
         return alive;
     }
 
-    private boolean monsterAttack(Character player) {
-        boolean alive = true;
-        System.out.println("The monster attack you !!");
+    private void monsterAttack(Character player) {
+        System.out.println(colorize("The monster attack you !!", Attribute.RED_TEXT(), Attribute.WHITE_BACK()));
 
         if (player.getDefenseItem() != null) {
             int damage = this.monster.getPower() - player.getDefenseItem().getStats();
@@ -71,31 +76,30 @@ public class MonsterCell extends Cell {
         }
 
         if (player.getLife() <= 0) {
-            alive = false;
             this.asciiArt.death();
             player.setAlive(false);
         }
-
-        return alive;
     }
 
     @Override
     public void apply() {
         Character player = App.getInstance().getPersonnage();
         System.out.println(this.monster.toString());
-        boolean monsterStatus;
-        boolean playerStatus = true;
-        boolean figth = true;
+        boolean monsterIsAlive;
 
-        while (figth) {
-            monsterStatus = playerAttack(player);
-
-            if (monsterStatus) {
-                playerStatus = monsterAttack(player);
-            }
-            if (!monsterStatus || !playerStatus) {
-                figth = false;
+        monsterIsAlive = playerAttack(player);
+        if (monsterIsAlive) {
+            if (this.monster instanceof Orcs && player instanceof Wizard) {
+                System.out.println("Orcs don't see you");
+            } else if (this.monster instanceof Demon && player instanceof Warrior) {
+                System.out.println("Demon don't see you");
+            } else {
+                monsterAttack(player);
             }
         }
+    }
+
+    public Monster getMonster() {
+        return monster;
     }
 }

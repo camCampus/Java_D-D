@@ -142,7 +142,7 @@ public class Panel extends JPanel {
                 if (cell instanceof LootCell) {
                     draw.drawImage(chest[aniIndex], i*64, (int)yDelta, 64, 128, null);
                 } else if (cell instanceof MonsterCell) {
-                    draw.drawImage(littleDemon[aniIndex], i*64, (int)yDelta, 64, 128, null);
+                    draw.drawImage(littleDemon[aniIndex], i*64, 30, 64, 128, null);
                 }
             }
         }
