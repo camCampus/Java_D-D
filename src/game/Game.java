@@ -9,9 +9,15 @@ import src.board.cell.Cell;
 import src.board.cell.MonsterCell;
 import src.dice.RollDice;
 import src.exception.PersoOutOfMapException;
+import src.items.Item;
+import src.items.attack.AttackItem;
+import src.items.attack.Bow;
+import src.items.attack.Stick;
 import src.menu.Menu;
 import src.menu.MenuActionEntry;
+import src.menu.Starter;
 import src.menu.inGame.Fight;
+import src.menu.inGame.Inventory;
 import src.menu.inGame.Run;
 import src.perso.Character;
 import src.window.DisplayGameAnimation;
@@ -96,7 +102,7 @@ public class Game {
         new BoardFactory(board);
         this.gameBoard = board.getEntry();
 
-        //Création des élément pour affichage graphique
+        //Création des éléments pour affichage graphique
         Panel panel = new Panel();
         panel.setGameBoard(this.gameBoard);
         new DisplayGameAnimation(panel);
@@ -104,6 +110,10 @@ public class Game {
 
         while (this.position < this.gameBoard.size() && player.isAlive()) {
 
+            //Choix de l'équipement
+            List<MenuActionEntry> start = new ArrayList<>();
+            start.add(new Starter(this.scanner));
+            new Menu(this.scanner, start).runMenu();
 
             String playerStats = App.getInstance().getPersonnage().toString();
             waitSecond(300);
@@ -130,29 +140,36 @@ public class Game {
 
             //Cell effect
             boolean runFight = true;
-
+            boolean canRun = false;
                 if (this.actualCell instanceof MonsterCell) {
-                    while (runFight) {
+
+                    while (runFight && player.isAlive()) {
+                        //Afficher le monstre
                         waitSecond(300);
                         System.out.println(colorize(".~~~| MONSTER |~~~.", Attribute.TEXT_COLOR(153, 0, 0)));
                         System.out.println(((MonsterCell) this.actualCell).getMonster().toString());
 
                         List<MenuActionEntry> fightMenu = new ArrayList<>();
-                        Run esc = new Run();
-                        fightMenu.add(esc);
+
                         Fight fight = new Fight();
                         fightMenu.add(fight);
+
+                        fightMenu.add(new Inventory(this.actualCell));
+
+                        Run esc = new Run(canRun);
+                        fightMenu.add(esc);
                         new Menu(this.scanner, fightMenu).runMenu();
 
                         if (esc.isEscape()) {
                             runFight = false;
                             this.position = Math.max(0, (this.position - 2));
                         } else {
+
                             this.actualCell.apply();
+                            canRun = true;
                             if (((MonsterCell) this.actualCell).getMonster().getLife() <= 0) {
                                 runFight = false;
                             }
-                            if ()
                         }
                     }
                 } else {

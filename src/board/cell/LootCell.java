@@ -2,14 +2,13 @@ package src.board.cell;
 
 import src.App;
 import src.board.LevelSelection;
-import src.items.attack.AttackItem;
-import src.items.attack.Spell;
-import src.items.attack.Sword;
+import src.items.attack.*;
 import src.items.defense.DefenseItem;
 import src.items.defense.MagicShield;
 import src.items.defense.Shield;
 import src.items.heal.PotionItem;
 import src.items.Item;
+import src.items.heal.ThunderPotion;
 import src.perso.Character;
 import src.perso.TypeCharacter;
 
@@ -28,7 +27,7 @@ public class LootCell extends Cell {
  }
     private void createLootItem() {
      int rand = random.nextInt(3);
-
+        rand = 2;
      switch (rand) {
          case 0 -> this.item = createAttackItem(this.level);
          case 1 -> this.item = createDefenseItem(this.level);
@@ -37,12 +36,14 @@ public class LootCell extends Cell {
     }
 
     private AttackItem createAttackItem(LevelSelection level) {
-     int rand = random.nextInt(2);
+     int rand = random.nextInt(4);
      AttackItem item = null;
 
         switch (rand) {
             case 0 -> item = new Sword(level);
             case 1 -> item = new Spell(level);
+            case 2 -> item = new Bow(level);
+            case 3 -> item = new Stick(level);
         }
 
         return item;
@@ -58,8 +59,14 @@ public class LootCell extends Cell {
 
         return item;
     }
-    private PotionItem createPotionItem() {
-        PotionItem item = new PotionItem();
+    private Item createPotionItem() {
+        int rand = random.nextInt(2);
+        Item item = null;
+        rand = 1;
+        switch (rand) {
+            case 0 -> item = new PotionItem();
+            case 1 -> item = new ThunderPotion();
+        }
         return item;
     }
 

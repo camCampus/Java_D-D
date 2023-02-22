@@ -1,18 +1,17 @@
 package src.menu.inGame;
 
 import src.board.cell.Cell;
-import src.board.cell.LootCell;
 import src.menu.Menu;
 import src.menu.MenuActionEntry;
 
-public class Loot implements MenuActionEntry {
+public class Inventory implements MenuActionEntry {
 
     private Cell cell;
     private boolean visible;
 
-    public Loot(Cell cell) {
+    public Inventory(Cell cell) {
         this.cell = cell;
-        this.visible = false;
+        this.visible = true;
     }
 
     @Override
@@ -22,14 +21,14 @@ public class Loot implements MenuActionEntry {
 
     @Override
     public String getLabel() {
-        return null;
+        return "Inventory";
     }
 
     @Override
     public boolean isVisible() {
-        if (this.cell instanceof LootCell) {
-            this.visible = true;
-        }
+//        if (this.cell instanceof LootCell) {
+//            this.visible = true;
+//        }
         return this.visible;
     }
 }

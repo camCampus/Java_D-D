@@ -2,6 +2,7 @@ package src.items.defense;
 
 import src.board.LevelSelection;
 import src.items.attack.SwordList;
+import src.monster.Monster;
 import src.perso.TypeCharacter;
 
 import java.util.ArrayList;
@@ -61,5 +62,10 @@ public class MagicShield extends DefenseItem {
     @Override
     protected TypeCharacter getUseBy() {
         return TypeCharacter.Wizard;
+    }
+
+    @Override
+    public int applySpeBonus(Monster monster) {
+        return 0;
     }
 }

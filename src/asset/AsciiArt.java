@@ -220,7 +220,9 @@ public class AsciiArt {
                 "                              XP^X'`b   d'`X^XX\n" +
                 "                              X. 9  `   '  P )X\n" +
                 "                              `b  `       '  d'\n" +
-                "                               `             '");
+                "                               `             '" +
+                "" +
+                "GAME OVER");
     }
 
 }

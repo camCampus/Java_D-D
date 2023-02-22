@@ -1,5 +1,6 @@
 package src.items.defense;
 import src.board.LevelSelection;
+import src.monster.Monster;
 import src.perso.TypeCharacter;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,5 +58,10 @@ public class Shield extends DefenseItem{
     @Override
     protected TypeCharacter getUseBy() {
         return TypeCharacter.Warrior;
+    }
+
+    @Override
+    public int applySpeBonus(Monster monster) {
+        return 0;
     }
 }

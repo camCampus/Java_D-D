@@ -41,6 +41,7 @@ public abstract class DefenseItem implements Item {
         }
     }
 
+
     public String getName() {
         return name;
     }

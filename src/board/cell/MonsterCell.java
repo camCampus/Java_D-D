@@ -5,6 +5,8 @@ import src.App;
 import src.asset.AsciiArt;
 import src.board.LevelSelection;
 import src.items.Item;
+import src.items.attack.Bow;
+import src.items.attack.Stick;
 import src.monster.*;
 import src.perso.Character;
 import src.perso.Warrior;
@@ -30,6 +32,7 @@ public class MonsterCell extends Cell {
         int rand = random.nextInt(5);
         Monster monster = null;
 
+
         switch (rand) {
             case 0 -> monster = new Dragon(level);
             case 1 -> monster = new Gobelin(level);
@@ -52,8 +55,21 @@ public class MonsterCell extends Cell {
 
     private boolean playerAttack(Character player) {
         boolean alive = true;
-        System.out.println("You attack the monster and hit him with " + player.getPower());
-        this.monster.setLife(this.monster.getLife() - player.getPower());
+        int speBonus = 0;
+
+
+        if (player.getAttackItem() != null && player.getAttackItem().isSpeBonus()) {
+            speBonus = player.getAttackItem().applySpeBonus(this.monster);
+        }
+
+        if (player.isThunderPotion()) {
+            this.monster.setLife(this.monster.getLife() - ((player.getPower() + speBonus)*2));
+            player.setThunderPotion(false);
+        } else {
+            this.monster.setLife(this.monster.getLife() - (player.getPower() + speBonus));
+        }
+
+        System.out.println("You attack the monster and hit him with " + player.getPower() + " + speBonus: " + speBonus);
         if (this.monster.getLife() <= 0) {
             System.out.println("You kill the monster");
             alive = false;
@@ -84,10 +100,13 @@ public class MonsterCell extends Cell {
     @Override
     public void apply() {
         Character player = App.getInstance().getPersonnage();
-        System.out.println(this.monster.toString());
+
         boolean monsterIsAlive;
 
-        monsterIsAlive = playerAttack(player);
+            //Player attaque
+            monsterIsAlive = playerAttack(player);
+
+            //Monster attaque
         if (monsterIsAlive) {
             if (this.monster instanceof Orcs && player instanceof Wizard) {
                 System.out.println("Orcs don't see you");

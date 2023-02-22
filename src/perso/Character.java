@@ -2,6 +2,8 @@ package src.perso;
 import src.items.Item;
 import src.items.attack.AttackItem;
 import src.items.defense.DefenseItem;
+import src.items.heal.ThunderPotion;
+import src.perso.inventory.Inventory;
 
 import java.util.Random;
 
@@ -32,6 +34,9 @@ public abstract class Character {
     private int defBonus;
     private boolean alive;
     private Random random;
+
+    private Inventory inventory;
+    private boolean thunderPotion;
     Character(String name, TypeCharacter type) {
         this.name = name;
         this.type = type;
@@ -41,6 +46,8 @@ public abstract class Character {
         this.defenseItem = null;
         this.alive = true;
         this.defBonus = 0;
+        this.thunderPotion = false;
+        this.inventory = new Inventory();
     }
 
 
@@ -116,12 +123,24 @@ public abstract class Character {
         this.defBonus = defBonus;
     }
 
+    public boolean isThunderPotion() {
+        return thunderPotion;
+    }
+
+    public void setThunderPotion(boolean thunderPotion) {
+        this.thunderPotion = thunderPotion;
+    }
+
     public boolean isAlive() {
         return alive;
     }
 
     public void setAlive(boolean alive) {
         this.alive = alive;
+    }
+
+    public Inventory getInventory() {
+        return inventory;
     }
 }
 

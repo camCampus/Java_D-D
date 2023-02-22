@@ -1,6 +1,7 @@
 package src.items.attack;
 
 import src.board.LevelSelection;
+import src.monster.Monster;
 import src.perso.TypeCharacter;
 
 import java.util.ArrayList;
@@ -64,4 +65,8 @@ public class Sword extends AttackItem {
     }
 
 
+    @Override
+    public int applySpeBonus(Monster monster) {
+        return 0;
+    }
 }

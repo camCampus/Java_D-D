@@ -7,8 +7,12 @@ import src.menu.MenuActionEntry;
 
 public class Run implements MenuActionEntry {
 
-    private boolean escape = false;
 
+    private boolean escape = false;
+    private boolean canEscape;
+    public Run(boolean canEscape) {
+        this.canEscape = canEscape;
+    }
     @Override
     public void apply(Menu menu) {
         this.escape = true;
@@ -19,9 +23,9 @@ public class Run implements MenuActionEntry {
     }
     @Override
     public boolean isVisible() {
-        return true;
+        return canEscape;
     }
     public boolean isEscape() {
-        return escape;
+        return this.escape;
     }
 }

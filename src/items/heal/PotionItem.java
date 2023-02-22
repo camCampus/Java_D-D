@@ -3,6 +3,7 @@ package src.items.heal;
 import com.diogonunes.jcolor.Attribute;
 import src.App;
 import src.items.Item;
+import src.monster.Monster;
 import src.perso.Character;
 
 import java.util.Random;
@@ -33,6 +34,12 @@ public class PotionItem implements Item {
         player.setLife(player.getLife() + this.up);
         System.out.println(this);
     }
+
+    @Override
+    public int applySpeBonus(Monster monster) {
+        return 0;
+    }
+
 
     @Override
     public String toString() {

@@ -15,6 +15,9 @@ public abstract class AttackItem implements Item {
     private int stats;
     private String description;
 
+    private boolean speBonus = false;
+
+
 
     protected abstract TypeCharacter getUseBy();
 
@@ -45,6 +48,8 @@ public abstract class AttackItem implements Item {
         }
     }
 
+
+
     public String getName() {
         return name;
     }
@@ -69,6 +74,13 @@ public abstract class AttackItem implements Item {
         this.description = description;
     }
 
+    public boolean isSpeBonus() {
+        return speBonus;
+    }
+
+    public void setSpeBonus(boolean speBonus) {
+        this.speBonus = speBonus;
+    }
     @Override
     public String toString() {
         return getName() + "\n" + "attack bonus + " + getStats() + "\n" + "description : " + "\n" + getDescription();

@@ -1,6 +1,7 @@
 package src.items.attack;
 
 import src.board.LevelSelection;
+import src.monster.Monster;
 import src.perso.TypeCharacter;
 
 import java.util.ArrayList;
@@ -55,5 +56,10 @@ public class Spell extends AttackItem{
     @Override
     protected TypeCharacter getUseBy() {
         return TypeCharacter.Wizard;
+    }
+
+    @Override
+    public int applySpeBonus(Monster monster) {
+        return 0;
     }
 }
