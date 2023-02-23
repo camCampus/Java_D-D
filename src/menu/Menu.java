@@ -13,18 +13,19 @@ public class Menu {
     private List<MenuActionEntry> entry;
 
     private boolean exitGame;
-
+    private int userChoice;
  public Menu(Scanner scanner, List<MenuActionEntry> entry) {
      this.scanner = scanner;
      this.entry = entry;
      this.exitGame = false;
+     this.userChoice = 0;
  }
 
     public boolean runMenu() {
 
         int max = this.entry.size();
 
-        int userChoice;
+
         boolean valid;
         do {
             System.out.println("Menu navigation enter a number");
@@ -58,9 +59,8 @@ public class Menu {
     public boolean exitGame() {
      return this.exitGame = true;
     }
-    public List<MenuActionEntry> getEntry() {
-        return entry;
+
+    public int getUserChoice() {
+        return userChoice;
     }
-
-
 }

@@ -4,8 +4,15 @@ import com.diogonunes.jcolor.Attribute;
 import src.App;
 import src.asset.AsciiArt;
 import src.items.Item;
+import src.menu.Menu;
+import src.menu.MenuActionEntry;
 import src.perso.Character;
 import src.perso.TypeCharacter;
+import src.perso.inventory.AddItem;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 import static com.diogonunes.jcolor.Ansi.colorize;
 
@@ -16,7 +23,7 @@ public abstract class AttackItem implements Item {
     private String description;
 
     private boolean speBonus = false;
-
+    private Scanner scanner = new Scanner(System.in);
 
 
     protected abstract TypeCharacter getUseBy();
@@ -29,18 +36,35 @@ public abstract class AttackItem implements Item {
         int resetPlayerPower = player.getPower();
         AsciiArt asciiArt = new AsciiArt();
         System.out.println(colorize(".~~~| ITEM |~~~.", Attribute.TEXT_COLOR(255,0,255)));
+        System.out.println(this);
         if (type == getUseBy()) {
 
-            if (player.getAttackItem() == null) {
-                player.setAttackItem(this);
-                player.setPower(player.getPower() + this.getStats());
-                System.out.println("You found and equip this item: " + "\n" + this);
 
-            } else if (player.getAttackItem().getStats() < this.getStats()) {
-                player.setAttackItem(this);
-                player.setPower(resetPlayerPower);
-                player.setPower(player.getPower() + this.getStats());
-                System.out.println("You found and equip a better item nice !! : " + "\n" + this);
+            if (player.getInventory().size() < 2) {
+                player.getInventory().add(this);
+
+            } else {
+                System.out.println(colorize(".~~~| INVENTORY |~~~.", Attribute.TEXT_COLOR(255,0,255)));
+                System.out.println("Inventory" + player.getInventory().size() +"/2");
+                System.out.println(player.getInventory().toString());
+                List<MenuActionEntry> inventoryLoot = new ArrayList<>();
+                inventoryLoot.add(new AddItem(this.scanner));
+                inventoryLoot.add(new MenuActionEntry() {
+                    @Override
+                    public void apply(Menu menu) {
+                    }
+
+                    @Override
+                    public String getLabel() {
+                        return "Don't add new item";
+                    }
+
+                    @Override
+                    public boolean isVisible() {
+                        return true;
+                    }
+                });
+                new Menu(this.scanner, inventoryLoot).runMenu();
             }
 
         } else {

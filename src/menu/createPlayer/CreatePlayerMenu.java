@@ -39,6 +39,7 @@ public class CreatePlayerMenu implements MenuActionEntry {
             public void apply(Menu menu) {
                 Character character = new Warrior(playerName, TypeCharacter.Warrior);
                 App.getInstance().setPersonnage(character, CreatePlayerMenu.this.random, CreatePlayerMenu.this.scanner);
+                System.out.println(App.getInstance().getPersonnage().toString());
             }
 
             @Override
@@ -57,6 +58,7 @@ public class CreatePlayerMenu implements MenuActionEntry {
             public void apply(Menu menu) {
                 Character character = new Wizard(playerName, TypeCharacter.Wizard);
                 App.getInstance().setPersonnage(character, CreatePlayerMenu.this.random, CreatePlayerMenu.this.scanner);
+                System.out.println(App.getInstance().getPersonnage().toString());
             }
 
             @Override

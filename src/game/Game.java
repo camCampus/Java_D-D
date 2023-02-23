@@ -6,20 +6,20 @@ import src.asset.AsciiArt;
 import src.board.Board;
 import src.board.BoardFactory;
 import src.board.cell.Cell;
+import src.board.cell.LootCell;
 import src.board.cell.MonsterCell;
 import src.dice.RollDice;
 import src.exception.PersoOutOfMapException;
 import src.items.Item;
 import src.items.attack.AttackItem;
-import src.items.attack.Bow;
-import src.items.attack.Stick;
 import src.menu.Menu;
 import src.menu.MenuActionEntry;
 import src.menu.Starter;
 import src.menu.inGame.Fight;
-import src.menu.inGame.Inventory;
 import src.menu.inGame.Run;
 import src.perso.Character;
+import src.perso.inventory.AddItem;
+import src.perso.inventory.Inventory;
 import src.window.DisplayGameAnimation;
 import src.window.Panel;
 
@@ -107,13 +107,18 @@ public class Game {
         panel.setGameBoard(this.gameBoard);
         new DisplayGameAnimation(panel);
         int pixelMouv = 0;
+        boolean selectWeapon = true;
 
         while (this.position < this.gameBoard.size() && player.isAlive()) {
 
             //Choix de l'équipement
-            List<MenuActionEntry> start = new ArrayList<>();
-            start.add(new Starter(this.scanner));
-            new Menu(this.scanner, start).runMenu();
+            if (selectWeapon) {
+                List<MenuActionEntry> start = new ArrayList<>();
+                start.add(new Starter(this.scanner));
+                new Menu(this.scanner, start).runMenu();
+                selectWeapon = false;
+            }
+
 
             String playerStats = App.getInstance().getPersonnage().toString();
             waitSecond(300);
@@ -141,43 +146,44 @@ public class Game {
             //Cell effect
             boolean runFight = true;
             boolean canRun = false;
-                if (this.actualCell instanceof MonsterCell) {
 
-                    while (runFight && player.isAlive()) {
-                        //Afficher le monstre
-                        waitSecond(300);
-                        System.out.println(colorize(".~~~| MONSTER |~~~.", Attribute.TEXT_COLOR(153, 0, 0)));
-                        System.out.println(((MonsterCell) this.actualCell).getMonster().toString());
+            if (this.actualCell instanceof MonsterCell) {
 
-                        List<MenuActionEntry> fightMenu = new ArrayList<>();
+                while (runFight && player.isAlive()) {
+                    //Afficher le monstre
+                    waitSecond(300);
+                    System.out.println(colorize(".~~~| MONSTER |~~~.", Attribute.TEXT_COLOR(153, 0, 0)));
+                    System.out.println(((MonsterCell) this.actualCell).getMonster().toString());
 
-                        Fight fight = new Fight();
-                        fightMenu.add(fight);
 
-                        fightMenu.add(new Inventory(this.actualCell));
+                    //Menu pour les actions si le joueur tombe sur une case monstre
 
-                        Run esc = new Run(canRun);
-                        fightMenu.add(esc);
-                        new Menu(this.scanner, fightMenu).runMenu();
+                    Fight fight = new Fight(this.actualCell);
+                    Run esc = new Run(canRun);
+                    Menu figthMenu;
+                    do {
+                        List<MenuActionEntry> fightEntry = new ArrayList<>();
+                        fightEntry.add(fight);
+                        fightEntry.add(new Inventory(this.scanner));
+                        fightEntry.add(esc);
+                        figthMenu = new Menu(this.scanner, fightEntry);
+                        figthMenu.runMenu();
+                    } while (figthMenu.getUserChoice() == 1);
 
-                        if (esc.isEscape()) {
+                    if (esc.isEscape()) {
+                        runFight = false;
+                        this.position = Math.max(0, (this.position - 2));
+                    } else {
+                        this.actualCell.apply();
+                        canRun = true;
+                        if (((MonsterCell) this.actualCell).getMonster().getLife() <= 0) {
                             runFight = false;
-                            this.position = Math.max(0, (this.position - 2));
-                        } else {
-
-                            this.actualCell.apply();
-                            canRun = true;
-                            if (((MonsterCell) this.actualCell).getMonster().getLife() <= 0) {
-                                runFight = false;
-                            }
                         }
                     }
-                } else {
-                    this.actualCell.apply();
                 }
-
-
-
+            } else {
+                this.actualCell.apply();
+            }
 
             waitSecond(1500);
         }
@@ -198,6 +204,7 @@ public class Game {
     public boolean lunchFight(boolean lunch) {
         return lunch = true;
     }
+
     public int getMap() {
         return map;
     }

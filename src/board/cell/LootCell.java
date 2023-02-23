@@ -27,7 +27,7 @@ public class LootCell extends Cell {
  }
     private void createLootItem() {
      int rand = random.nextInt(3);
-        rand = 2;
+        rand = 0;
      switch (rand) {
          case 0 -> this.item = createAttackItem(this.level);
          case 1 -> this.item = createDefenseItem(this.level);
@@ -38,7 +38,7 @@ public class LootCell extends Cell {
     private AttackItem createAttackItem(LevelSelection level) {
      int rand = random.nextInt(4);
      AttackItem item = null;
-
+        rand = 1;
         switch (rand) {
             case 0 -> item = new Sword(level);
             case 1 -> item = new Spell(level);
@@ -62,7 +62,7 @@ public class LootCell extends Cell {
     private Item createPotionItem() {
         int rand = random.nextInt(2);
         Item item = null;
-        rand = 1;
+
         switch (rand) {
             case 0 -> item = new PotionItem();
             case 1 -> item = new ThunderPotion();

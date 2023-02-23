@@ -5,6 +5,8 @@ import src.items.defense.DefenseItem;
 import src.items.heal.ThunderPotion;
 import src.perso.inventory.Inventory;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public abstract class Character {
@@ -35,7 +37,7 @@ public abstract class Character {
     private boolean alive;
     private Random random;
 
-    private Inventory inventory;
+    private List<AttackItem> inventory;
     private boolean thunderPotion;
     Character(String name, TypeCharacter type) {
         this.name = name;
@@ -47,7 +49,7 @@ public abstract class Character {
         this.alive = true;
         this.defBonus = 0;
         this.thunderPotion = false;
-        this.inventory = new Inventory();
+        this.inventory = new ArrayList<>();
     }
 
 
@@ -105,6 +107,7 @@ public abstract class Character {
 
     public void setAttackItem(AttackItem attackItem) {
         this.attackItem = attackItem;
+        this.setPower(this.attackItem.getStats() + this.getPower());
     }
 
     public DefenseItem getDefenseItem() {
@@ -139,9 +142,10 @@ public abstract class Character {
         this.alive = alive;
     }
 
-    public Inventory getInventory() {
+    public List<AttackItem> getInventory() {
         return inventory;
     }
+
 }
 
 

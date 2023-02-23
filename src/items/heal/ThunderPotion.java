@@ -17,6 +17,7 @@ public class ThunderPotion implements Item {
         Character player = App.getInstance().getPersonnage();
         player.setThunderPotion(true);
         System.out.println(colorize(".~~~| ITEM |~~~.", Attribute.TEXT_COLOR(255,0,255)));
+        System.out.println("ThunderPotion double your power for next fight");
     }
 
     @Override
