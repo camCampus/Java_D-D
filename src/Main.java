@@ -12,8 +12,14 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ClassNotFoundException {
 
+        //--------| DATABASE
+        try {
+            new database();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
 
         //--------| MENU
         boolean exitGame = false;

@@ -1,21 +1,24 @@
 package src;
 
-import java.sql.Connection;
-import java.sql.Driver;
-import java.sql.DriverManager;
+import java.sql.*;
 
 public class database {
 
     public database() throws ClassNotFoundException {
         try {
             initDatabase();
-        } catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException | SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private void initDatabase() throws ClassNotFoundException {
-        Class.forName("mysql-connector-j-8.0.32.jar");
+    private void initDatabase() throws ClassNotFoundException, SQLException {
 
+        Connection connection =DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/Dragon","root","");
+
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SHOW DATABASES;");
+        System.out.println("Connected");
     }
 }
