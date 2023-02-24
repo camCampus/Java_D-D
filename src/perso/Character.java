@@ -34,6 +34,7 @@ public abstract class Character {
     private AttackItem attackItem ;
     private DefenseItem defenseItem;
     private int defBonus;
+    private int attackBonus;
     private boolean alive;
     private Random random;
 
@@ -48,6 +49,7 @@ public abstract class Character {
         this.defenseItem = null;
         this.alive = true;
         this.defBonus = 0;
+        this.attackBonus=0;
         this.thunderPotion = false;
         this.inventory = new ArrayList<>();
     }
@@ -107,7 +109,7 @@ public abstract class Character {
 
     public void setAttackItem(AttackItem attackItem) {
         this.attackItem = attackItem;
-        this.setPower(this.attackItem.getStats() + this.getPower());
+        this.setAttackBonus(this.attackItem.getStats());
     }
 
     public DefenseItem getDefenseItem() {
@@ -146,6 +148,13 @@ public abstract class Character {
         return inventory;
     }
 
+    public int getAttackBonus() {
+        return attackBonus;
+    }
+
+    public void setAttackBonus(int attackBonus) {
+        this.attackBonus = attackBonus;
+    }
 }
 
 

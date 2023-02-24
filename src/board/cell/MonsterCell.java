@@ -63,13 +63,13 @@ public class MonsterCell extends Cell {
         }
 
         if (player.isThunderPotion()) {
-            this.monster.setLife(this.monster.getLife() - ((player.getPower() + speBonus)*2));
+            this.monster.setLife(this.monster.getLife() - ((damageCalc((player.getPower() + player.getAttackBonus())) + speBonus) * 2));
             player.setThunderPotion(false);
         } else {
-            this.monster.setLife(this.monster.getLife() - (player.getPower() + speBonus));
+            this.monster.setLife(this.monster.getLife() - ((damageCalc((player.getPower() + player.getAttackBonus())) + speBonus)));
         }
 
-        System.out.println("You attack the monster and hit him with " + player.getPower() + " + speBonus: " + speBonus);
+        System.out.println("You attack the monster and hit him with " + (player.getPower() + player.getAttackBonus()) + " + speBonus: " + speBonus);
         if (this.monster.getLife() <= 0) {
             System.out.println("You kill the monster");
             alive = false;
@@ -83,12 +83,12 @@ public class MonsterCell extends Cell {
         System.out.println(colorize("The monster attack you !!", Attribute.RED_TEXT(), Attribute.WHITE_BACK()));
 
         if (player.getDefenseItem() != null) {
-            int damage = this.monster.getPower() - player.getDefenseItem().getStats();
+            int damage = damageCalc(this.monster.getPower()) - player.getDefenseItem().getStats();
             damage = Math.max(damage, 0);
             player.setLife(player.getLife() - damage);
             System.out.println("Monster deal you " + damage);
         } else {
-            player.setLife(player.getLife() - this.monster.getPower());
+            player.setLife(player.getLife() - damageCalc(this.monster.getPower()));
         }
 
         if (player.getLife() <= 0) {
@@ -103,10 +103,10 @@ public class MonsterCell extends Cell {
 
         boolean monsterIsAlive;
 
-            //Player attaque
-            monsterIsAlive = playerAttack(player);
+        //Player attaque
+        monsterIsAlive = playerAttack(player);
 
-            //Monster attaque
+        //Monster attaque
         if (monsterIsAlive) {
             if (this.monster instanceof Orcs && player instanceof Wizard) {
                 System.out.println("Orcs don't see you");
@@ -120,5 +120,35 @@ public class MonsterCell extends Cell {
 
     public Monster getMonster() {
         return monster;
+    }
+
+    private ChanceAttack randomAttack() {
+        ChanceAttack chance;
+        int rand = this.random.nextInt(0, 100);
+        if(isBetween(rand,0, 80)){
+            chance = ChanceAttack.Touch;
+            System.out.println("Attack touch");
+        }   else if(isBetween(rand,81, 96)){
+            chance = ChanceAttack.Miss;
+            System.out.println("Attack Miss");
+        } else {
+            chance = ChanceAttack.Critic;
+            System.out.println("Attack Critic");
+        }
+        return chance;
+    }
+    private int damageCalc(int damage) {
+        int givenDamge = 0;
+        switch (randomAttack()) {
+            case Touch -> givenDamge = damage;
+            case Miss -> {}
+            case Critic -> givenDamge = damage*3;
+        }
+
+        return givenDamge;
+    }
+
+    private boolean isBetween(int x, int lower, int upper) {
+        return lower <= x && x <= upper;
     }
 }

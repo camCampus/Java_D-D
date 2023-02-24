@@ -43,7 +43,7 @@ public class BoardFactory {
                         int rand = random.nextInt(2);
                         switch (rand) {
                             case 0 -> fillList.set(i, new LootCell(LevelSelection.Easy));
-                            case 1 -> fillList.set(i, new MonsterCell(LevelSelection.Easy));
+                            //case 1 -> fillList.set(i, new MonsterCell(LevelSelection.Easy));
                         }
                     }
                 }
@@ -75,7 +75,7 @@ public class BoardFactory {
                         int rand = random.nextInt(2);
                         switch (rand) {
                             case 0 -> fillList.set(i, new LootCell(LevelSelection.Hard));
-                            case 1 -> fillList.set(i, new MonsterCell(LevelSelection.Hard));
+                            //case 1 -> fillList.set(i, new MonsterCell(LevelSelection.Hard));
                         }
                     }
                 }

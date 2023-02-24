@@ -40,7 +40,7 @@ public class Inventory implements MenuActionEntry {
                 @Override
                 public void apply(Menu menu) {
                     System.out.println("equip item...");
-                    player.setAttackItem(player.getInventory().get(finalI));
+                    switchItem(finalI);
                 }
 
                 @Override
@@ -57,6 +57,9 @@ public class Inventory implements MenuActionEntry {
         new Menu(this.scanner, items).runMenu();
     }
 
+    private void switchItem(int item) {
+        player.setAttackItem(player.getInventory().get(item));
+    }
     @Override
     public String getLabel() {
         return "Inventory";

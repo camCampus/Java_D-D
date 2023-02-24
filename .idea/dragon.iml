@@ -10,5 +10,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="JColor-5.5.1" level="project" />
+    <orderEntry type="library" name="mysql-connector-j-8.0.32" level="project" />
   </component>
 </module>

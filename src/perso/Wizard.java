@@ -16,7 +16,8 @@ public class Wizard extends Character {
         return  colorize(".~~~| "+getName()+" |~~~.", Attribute.TEXT_COLOR(255,255,0))+"\n"+
                 "Life: " + getLife() +" \n"+
                 "Power: " + getPower() +" \n"+
-                "DefBonus: " + getDefBonus()+" \n";
+                "DefBonus: " + getDefBonus() +" \n"+
+                "AttackBonus: " + getAttackBonus() +" \n";
     }
 
 

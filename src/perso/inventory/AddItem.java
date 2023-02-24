@@ -1,6 +1,7 @@
 package src.perso.inventory;
 
 import src.App;
+import src.items.attack.AttackItem;
 import src.menu.Menu;
 import src.menu.MenuActionEntry;
 import src.perso.Character;
@@ -12,20 +13,22 @@ public class AddItem implements MenuActionEntry {
 
     private Scanner scanner;
     private Character player;
-    public AddItem(Scanner scanner) {
+    private AttackItem item;
+    public AddItem(Scanner scanner, AttackItem item) {
         this.scanner = scanner;
         this.player = App.getInstance().getPersonnage();
+        this.item = item;
     }
 
     @Override
     public void apply(Menu menu) {
 
-            System.out.println("Inventory full you have to drop something");
+
             List<MenuActionEntry> drop = new ArrayList<>();
             drop.add(new MenuActionEntry() {
                 @Override
                 public void apply(Menu menu) {
-                    player.getInventory().remove(0);
+                    player.getInventory().set(0, item);
                 }
 
                 @Override
@@ -42,7 +45,7 @@ public class AddItem implements MenuActionEntry {
             drop.add(new MenuActionEntry() {
                 @Override
                 public void apply(Menu menu) {
-                    player.getInventory().remove(1);
+                    player.getInventory().set(1, item);;
                 }
 
                 @Override

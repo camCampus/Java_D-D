@@ -48,7 +48,7 @@ public abstract class AttackItem implements Item {
                 System.out.println("Inventory" + player.getInventory().size() +"/2");
                 System.out.println(player.getInventory().toString());
                 List<MenuActionEntry> inventoryLoot = new ArrayList<>();
-                inventoryLoot.add(new AddItem(this.scanner));
+                inventoryLoot.add(new AddItem(this.scanner, this));
                 inventoryLoot.add(new MenuActionEntry() {
                     @Override
                     public void apply(Menu menu) {
