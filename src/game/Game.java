@@ -98,6 +98,7 @@ public class Game {
 
         // Création du board de jeux !
         Board board = new Board();
+
         //Remplissage du board
         new BoardFactory(board);
         this.gameBoard = board.getEntry();

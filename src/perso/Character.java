@@ -155,6 +155,8 @@ public abstract class Character {
     public void setAttackBonus(int attackBonus) {
         this.attackBonus = attackBonus;
     }
+
+
 }
 
 
